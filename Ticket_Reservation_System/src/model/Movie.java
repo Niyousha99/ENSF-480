@@ -28,6 +28,8 @@ public class Movie {
 		return str;
 	}
 	
+	
+	
 	public boolean equals(Movie m) { 
 
     // If the object is compared with itself then return true   

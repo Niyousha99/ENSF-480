@@ -1,9 +1,6 @@
 package view;
 
-import java.awt.BorderLayout;
-import java.awt.CardLayout;
 import java.awt.Color;
-import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
@@ -36,8 +33,9 @@ public class MainGUI extends JFrame implements DocumentListener{
 		
 		setLayout(new GridLayout());
 		
-		JLabel background = new JLabel(new ImageIcon("img/MainFrame_background.jpg"));
+		JLabel background = new JLabel(new ImageIcon("src/img/MainFrame_background.jpg"));
 		background.setLayout(new BoxLayout(background, BoxLayout.PAGE_AXIS));
+		
 		background.add(Box.createRigidArea(new Dimension(0, 300)));
 		JLabel welcomeText = new JLabel("Welcome to your local Ticket Reservation System!");
 		welcomeText.setFont(new Font("Segoe UI", Font.PLAIN, 30));

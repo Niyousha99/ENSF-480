@@ -13,6 +13,7 @@ import model.*;
 // create business logic in backend based on tables (theater, movies, registered users, etc.)
 // Suggestion - Fill in all the data instead of just having getter functions?
 //				e.g. get all movies from table in DB and fill in movieList in Theater
+
 public class DBManager {
 	private Connection dbConnection;
 	

@@ -1,11 +1,7 @@
 package view;
 
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Font;
 import java.awt.GridLayout;
 
-import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -36,6 +32,12 @@ public class MoviesGUI extends JFrame{
 		
 		add(background);
 		pack();
+	}
+	
+	public void setMovies(String movies) {
+		// trim for info per movie
+		
+		// Movies hard coded for now...
 	}
 	
 	public JButton getViewShowtimesButton() {

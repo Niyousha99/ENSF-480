@@ -8,7 +8,7 @@ import view.*;
 public class GUIController {
 	private MainGUI mainFrame;
 	private LoginGUI loginWindow;
-	
+	private MoviesGUI moviesFrame;
 	
 	public GUIController() {
 		initMainFrame();
@@ -33,6 +33,12 @@ public class GUIController {
 		loginEventHandler();
 	}
 	
+	private void initMoviesFrame() {
+		moviesFrame = new MoviesGUI();
+		moviesFrame.setVisible(true);
+		moviesFrameEventHandler();
+	}
+	
 	/**
 	 * Switches back to the desired frame supplied by the first parameter by disposing the frame supplied by the second parameter 
 	 * and setting the desired frame to visible.
@@ -52,7 +58,7 @@ public class GUIController {
 	private void mainFrameEventHandler() {
 		mainFrame.getBrowseMoviesButton().addActionListener((ActionEvent e) ->{
 			mainFrame.dispose();
-			initLoginFrame();
+			initMoviesFrame();
 		});
 		
 		mainFrame.getCancelTicketButton().addActionListener((ActionEvent e) ->{
@@ -71,6 +77,12 @@ public class GUIController {
 		loginWindow.getRegisterButton().addActionListener((ActionEvent e) ->{
 			
 		});
+	}
+	
+	// TODO Movies Frame event handlers
+	
+	private void moviesFrameEventHandler() {
+		
 	}
 	
 }
