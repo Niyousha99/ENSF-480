@@ -1,10 +1,12 @@
 package model;
 
 public class Seat {
-	private int row, col;
+	private char row;
+	private int col;
 	private boolean reserved; // == seatBooked
 	
-	public Seat(int r, int c) {
+	public Seat(char r, int c) {
+		assert (r >= 'A' && r <= 'Z' && c > 0);
 		row = r;
 		col = c;
 		reserved = false; // seat is automatically available upon creation
@@ -14,7 +16,7 @@ public class Seat {
 		return row;
 	}
 
-	public void setRow(int row) {
+	public void setRow(char row) {
 		this.row = row;
 	}
 
