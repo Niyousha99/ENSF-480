@@ -1,9 +1,9 @@
 package controller;
-import java.awt.event.ActionEvent;
-
-import javax.swing.JFrame;
-
 import view.*;
+import model.*;
+
+import java.awt.event.ActionEvent;
+import javax.swing.JFrame;
 
 public class GUIController {
 	private MainGUI mainFrame;
@@ -12,7 +12,6 @@ public class GUIController {
 	
 	public GUIController() {
 		initMainFrame();
-		//initLoginFrame();
 	}
 	
 	private void initMainFrame() {
@@ -33,10 +32,11 @@ public class GUIController {
 		loginEventHandler();
 	}
 	
+	
 	private void initMoviesFrame() {
-		moviesFrame = new MoviesGUI();
+		moviesFrame = new MoviesGUI(null); // TODO pass movies information 
 		moviesFrame.setVisible(true);
-		moviesFrameEventHandler();
+		//moviesFrameEventHandler();
 	}
 	
 	/**
