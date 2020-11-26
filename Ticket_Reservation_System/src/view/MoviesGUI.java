@@ -24,6 +24,8 @@ public class MoviesGUI extends JFrame{
 		setLayout(new BorderLayout());
 		
 		displayMovies(movies);
+		//pack();
+	//	setMinimumSize(getPreferredSize());
 	}
 	
 	// each second column gets the next movie.toString
@@ -47,7 +49,14 @@ public class MoviesGUI extends JFrame{
 		panel.setLayout(new GridLayout(0, 2, 50, 50)); // any number of rows and 2 columns (movie poster and desciption text)
 		panel.setBackground(Color.BLACK);
 		
-		JLabel poster1 = new JLabel(new ImageIcon("src/img/avengers.jpg"));
+		
+		ImageIcon image1 = new ImageIcon("src/img/avengers.jpg");
+		Image image = image1.getImage(); // transform it 
+		Image newimg1 = image.getScaledInstance(500, 700, java.awt.Image.SCALE_SMOOTH); // scale it the smooth way  
+		image1 = new ImageIcon(newimg1);  // transform it back
+		JLabel poster1 = new JLabel(image1);
+		poster1.setHorizontalAlignment(JLabel.CENTER);
+        poster1.setVerticalAlignment(JLabel.CENTER);
 		panel.add(poster1);
 		JTextArea text1 = new JTextArea();
 		text1.setBackground(Color.BLACK);
@@ -59,7 +68,13 @@ public class MoviesGUI extends JFrame{
 		text1.setText(d1);
 		panel.add(text1);
 		
-		JLabel poster2 = new JLabel(new ImageIcon("src/img/lion_king.jpg"));
+		ImageIcon image2 = new ImageIcon("src/img/lion_king.jpg");
+		Image getImage2 = image2.getImage(); // transform it 
+		Image newimg2 = getImage2.getScaledInstance(500, 700, java.awt.Image.SCALE_SMOOTH); // scale it the smooth way  
+		image2 = new ImageIcon(newimg2);  // transform it back
+		JLabel poster2 = new JLabel(image2);
+		poster2.setHorizontalAlignment(JLabel.CENTER);
+        poster2.setVerticalAlignment(JLabel.CENTER);
 		panel.add(poster2);
 		JTextArea text2 = new JTextArea();
 		text2.setBackground(Color.BLACK);
@@ -71,7 +86,13 @@ public class MoviesGUI extends JFrame{
 		text2.setText(d2);
 		panel.add(text2);
 		
-		JLabel poster3 = new JLabel(new ImageIcon("src/img/top_gun.jpg"));
+		ImageIcon image3 = new ImageIcon("src/img/top_gun.jpg");
+		Image getImage3 = image3.getImage(); // transform it 
+		Image newimg3 = getImage3.getScaledInstance(500, 700, java.awt.Image.SCALE_SMOOTH); // scale it the smooth way  
+		image3 = new ImageIcon(newimg3);  // transform it back
+		JLabel poster3 = new JLabel(image3);
+		poster3.setHorizontalAlignment(JLabel.CENTER);
+        poster3.setVerticalAlignment(JLabel.CENTER);
 		panel.add(poster3);
 		JTextArea text3 = new JTextArea();
 		text3.setBackground(Color.BLACK);
@@ -83,10 +104,27 @@ public class MoviesGUI extends JFrame{
 		text3.setText(d3);
 		panel.add(text3);
 		
-		JScrollPane scrollPanel = new JScrollPane();
-		panel.add(scrollPanel, BorderLayout.CENTER);
-		
+		ImageIcon image4 = new ImageIcon("src/img/debugger.jpg");
+		Image getImage4 = image4.getImage(); // transform it 
+		Image newimg4 = getImage4.getScaledInstance(500, 700, java.awt.Image.SCALE_SMOOTH); // scale it the smooth way  
+		image3 = new ImageIcon(newimg4);  // transform it back
+		JLabel poster4 = new JLabel(image4);
+		poster4.setHorizontalAlignment(JLabel.CENTER);
+        poster4.setVerticalAlignment(JLabel.CENTER);
+		panel.add(poster4);
+		JTextArea text4 = new JTextArea();
+		text4.setBackground(Color.BLACK);
+		text4.setForeground(Color.WHITE);
+		text4.setEditable(false);
+		text4.setFont(new Font("Arial", Font.BOLD, 15));
+		text4.setLineWrap(true);
+		String d4 = "The Debugger";
+		text4.setText(d4);
+		panel.add(text4);
 		add(panel, BorderLayout.CENTER);
+		JScrollPane scrollPanel = new JScrollPane(panel, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+		add(scrollPanel, BorderLayout.CENTER);
+		
 	}
 	
 	public JButton getViewShowtimesButton() {
