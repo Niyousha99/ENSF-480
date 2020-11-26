@@ -9,19 +9,19 @@ public class Movie {
 	public Movie(String n, String d) {
 		title = n;
 		description = d;
-		
-		setShowtimes(); // TODO do we need this method?
+		setShowtimes();
 	}
 	
-	// define a set of showtimes for every movie
-	// can be same for every day or different for weekdays/weekends
-	private void setShowtimes() {
+	// populate showtimes for the movie
+	public void setShowtimes() {
 		
 		
 	}
+	
+	public ArrayList<Showtime> getShowtimes() {return showtimes;} 
 	
 	// How text will be presented next to movie poster in MoviesGUI
-	// Want title, description, and showtimes in order
+	// Want title and description
 	@Override
 	public String toString() {
 		String str = "";
@@ -31,13 +31,13 @@ public class Movie {
 		return str;
 	}
 	
-	
-	
 	public boolean equals(Movie m) { 
 
     // If the object is compared with itself then return true   
     	if (m.title == title) return true; 
     	return false;
-	}   
+	}
+
+	  
 	
 }
