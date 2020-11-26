@@ -6,27 +6,33 @@ public class Movie {
 	private String title, description;
 	private ArrayList<Showtime> showtimes;
 	
-	public Movie(String n, String d) {
+	// pass showtimes here in ctor or can be separate (Call setShowtimes in DB)
+	public Movie(String n, String d, ArrayList <Showtime> showtimes) {
 		title = n;
 		description = d;
-		setShowtimes();
+		showtimes = new ArrayList<Showtime>();
+		setShowtimes(showtimes);
 	}
 	
-	// populate showtimes for the movie
-	public void setShowtimes() {
-		
-		
+	// populate showtimes (identical for each movie)
+	public void setShowtimes(ArrayList <Showtime> src) {
+		for (Showtime st: src) {
+			showtimes.add(st);
+		}
 	}
 	
 	public ArrayList<Showtime> getShowtimes() {return showtimes;} 
 	
 	// How text will be presented next to movie poster in MoviesGUI
-	// Want title and description
+	// This displays only the title and description because there is a
+	// "View showtimes" button that will display the showtimes separately.
 	@Override
 	public String toString() {
 		String str = "";
 		
-		
+		str += title;
+		str += "\n\n\n";
+		str += description;
 		
 		return str;
 	}
