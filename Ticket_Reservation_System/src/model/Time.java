@@ -8,11 +8,10 @@ public class Time {
 		minute = m;
 	}
 	
+	// Returns time as a string
 	@Override
 	public String toString() {
-		String str = "";
-		
-		
+		String str = hour + ":" + minute;
 		
 		return str;
 	}
