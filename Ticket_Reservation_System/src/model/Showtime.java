@@ -14,6 +14,7 @@ public class Showtime implements Constants {
 		initializeSeats();
 	}
 	
+	// How text will be presented in the "View Showtimes" menu
 	@Override
 	public String toString() {
 		String str = date + " " + time;
@@ -22,10 +23,13 @@ public class Showtime implements Constants {
 		return str;
 	}
 
+	// Returns the list of seatLists
 	public ArrayList<ArrayList<Seat>> getSeats() {return seats;}
 
+	// Sets seats to given seat list
 	public void setSeats(ArrayList<ArrayList<Seat>> s) {seats = s;}
 	
+	// Initializes all seats in the Showtime
 	public void initializeSeats() {
 		char r = 'A';
 		for (int i = 0; i < SEATROWS; i++, r++)
@@ -33,6 +37,7 @@ public class Showtime implements Constants {
 				seats.get(i).add(new Seat(r, j + 1));
 	}
 	
+	// Returns the number seats available in the Showtime
 	public int numAvailSeats() {
 		int avail = 0;
 		for (int i = 0; i < SEATROWS; i++)
