@@ -17,6 +17,8 @@ public class Showtime implements Constants {
 	@Override
 	public String toString() {
 		String str = date + " " + time;
+		str += "\n\n";
+		str += "Available seats: " + numAvailSeats();
 		return str;
 	}
 
@@ -24,10 +26,19 @@ public class Showtime implements Constants {
 
 	public void setSeats(ArrayList<ArrayList<Seat>> s) {seats = s;}
 	
-	void initializeSeats() {
+	public void initializeSeats() {
 		char r = 'A';
 		for (int i = 0; i < SEATROWS; i++, r++)
 			for (int j = 0; j < SEATCOLS; j++)
 				seats.get(i).add(new Seat(r, j + 1));
+	}
+	
+	public int numAvailSeats() {
+		int avail = 0;
+		for (int i = 0; i < SEATROWS; i++)
+			for (Seat s : seats.get(i)) {
+				if (!s.isReserved()) avail++;
+			}
+		return avail;
 	}
 }
