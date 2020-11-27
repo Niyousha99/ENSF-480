@@ -1,15 +1,26 @@
 package controller;
+import view.*;
+import java.sql.SQLException;
+import java.util.ArrayList;
+
 import model.*;
 import view.*;
 
 // initialize and run application 
 
-public class MasterController {
+public class MasterController implements Constants{
+	
+	private ArrayList<Movie> movies;
+	private ArrayList<Account> accounts; 
+	
+	public void populateModel() {
+		
+	}
 	
 	public static void main (String args[]) {
 		// instantiate DBManager and get all required data from DB
 		// to communicate between other controllers, models, views
-		GUIController gui = new GUIController();
 		
+		GUIController gui = new GUIController();
 	}
 }

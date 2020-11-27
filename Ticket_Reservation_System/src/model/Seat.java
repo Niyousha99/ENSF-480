@@ -42,13 +42,11 @@ public class Seat {
 	}
 	
 	
-	// convert row number to alphabet to general alphanumeric
-	// code for seat (e.g. row = 1 and col = 1 translates to A1)
 	@Override
 	public String toString() {
 		String str = "";
-		
-		
+		str += row;
+		str += Integer.toString(col);
 		
 		return str;
 	}

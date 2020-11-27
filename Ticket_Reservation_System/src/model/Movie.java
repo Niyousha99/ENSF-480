@@ -6,7 +6,6 @@ public class Movie {
 	private String title, description;
 	private ArrayList<Showtime> showtimes;
 	
-	// pass showtimes here in ctor or can be separate (Call setShowtimes in DB)
 	public Movie(String n, String d) {
 		title = n;
 		description = d;

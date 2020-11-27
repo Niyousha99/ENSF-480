@@ -26,9 +26,8 @@ public class SeatsGUI extends JFrame{
 		
 		setLayout(new GridLayout());
 		
-		JLabel background = new JLabel(new ImageIcon("img/seats_background.png"));
+		JLabel background = new JLabel(new ImageIcon("img/curtains.jpg"));
 		background.setLayout(new BoxLayout(background, BoxLayout.PAGE_AXIS));
-		
 		
 		
 		
