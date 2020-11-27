@@ -14,10 +14,10 @@ public class Reservation {
 	
 	// For reserving tickets
 	public void addTicket(Ticket ticket) {
-		
+		tickets.add(ticket);
 	}
 	
-	// For cancelling tickets
+	// For canceling tickets
 	public void deleteTicket(Ticket ticket) {
 		
 	}
@@ -29,12 +29,14 @@ public class Reservation {
 		return null;
 	}
 	
+	// Returns all tickets as a string
 	@Override
 	public String toString() {
 		String str = "";
-		
-		
-		
+		for (Ticket t : tickets) {
+			str += t;
+			str += "\n\n";
+		}
 		return str;
 	}
 	
