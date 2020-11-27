@@ -5,7 +5,16 @@ public class FinancialInstitution {
 	// TODO Think of other attributes and operations for bank
 	// perhaps credit card balance to show effects of purchases and refunds?
 	public FinancialInstitution(String name) {
-		bankName = name;
+		setBankName(name);
 	}
+	
+	public String getBankName() {
+		return bankName;
+	}
+	
+	public void setBankName(String bankName) {
+		this.bankName = bankName;
+	}
+	
 
 }

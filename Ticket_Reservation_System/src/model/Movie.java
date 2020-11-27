@@ -7,11 +7,10 @@ public class Movie {
 	private ArrayList<Showtime> showtimes;
 	
 	// pass showtimes here in ctor or can be separate (Call setShowtimes in DB)
-	public Movie(String n, String d, ArrayList <Showtime> src) {
+	public Movie(String n, String d) {
 		title = n;
 		description = d;
 		showtimes = new ArrayList<Showtime>();
-		setShowtimes(src);
 	}
 	
 	// populate showtimes (identical for each movie)
