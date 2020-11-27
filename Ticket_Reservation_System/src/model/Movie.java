@@ -7,11 +7,11 @@ public class Movie {
 	private ArrayList<Showtime> showtimes;
 	
 	// pass showtimes here in ctor or can be separate (Call setShowtimes in DB)
-	public Movie(String n, String d, ArrayList <Showtime> showtimes) {
+	public Movie(String n, String d, ArrayList <Showtime> src) {
 		title = n;
 		description = d;
 		showtimes = new ArrayList<Showtime>();
-		setShowtimes(showtimes);
+		setShowtimes(src);
 	}
 	
 	// populate showtimes (identical for each movie)
@@ -21,7 +21,17 @@ public class Movie {
 		}
 	}
 	
-	public ArrayList<Showtime> getShowtimes() {return showtimes;} 
+	public ArrayList<Showtime> getShowtimes() {return showtimes;}
+	
+	public String[] getShowtimeChoices() {
+		String[] times = new String[showtimes.size()];
+		for (int i = 0; i < showtimes.size() - 1; i++) {
+			times[i] = showtimes.get(i).toString();
+		}
+		return times;
+	}
+	
+	public String getTitle() {return title;}
 	
 	// How text will be presented next to movie poster in MoviesGUI
 	// This displays only the title and description because there is a

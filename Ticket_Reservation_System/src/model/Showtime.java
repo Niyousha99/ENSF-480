@@ -11,5 +11,13 @@ public class Showtime {
 		
 	}
 	
-	
+	@Override
+	public String toString() {
+		String str = date + " " + time;
+		return str;
+	}
+
+	public ArrayList<Seat> getSeats() {return seats;}
+
+	public void setSeats(ArrayList<Seat> s) {seats = s;}
 }

@@ -3,12 +3,16 @@ import view.*;
 import model.*;
 
 import java.awt.event.ActionEvent;
+
+import javax.swing.JButton;
 import javax.swing.JFrame;
 
 public class GUIController {
 	private MainGUI mainFrame;
 	private LoginGUI loginWindow;
 	private MoviesGUI moviesFrame;
+	private ShowtimesGUI showtimesFrame;
+	private SeatsGUI seatsFrame;
 	
 	public GUIController() {
 		initMainFrame();
@@ -36,7 +40,20 @@ public class GUIController {
 	private void initMoviesFrame() {
 		moviesFrame = new MoviesGUI(null); // TODO pass movies information 
 		moviesFrame.setVisible(true);
+		// TODO uncomment after movies is dynamic
 		//moviesFrameEventHandler();
+		
+	}
+	
+	private void initShowtimesFrame() {
+		
+		//showtimesFrame = new ShowtimesGUI();
+	}
+	
+	private void initSeatsFrame() {
+		seatsFrame = new SeatsGUI();
+		seatsFrame.setVisible(true);
+		seatsFrameEventHandler();
 	}
 	
 	/**
@@ -80,9 +97,27 @@ public class GUIController {
 	}
 	
 	// TODO Movies Frame event handlers
-	
+
 	private void moviesFrameEventHandler() {
-		
+		for (JButton b: moviesFrame.getViewShowtimesButtons()) {
+			b.addActionListener((ActionEvent e) ->{
+				//TODO init showtimes GUI and pass movie info
+				
+			});
+			
+			
+		}
 	}
+	
+	// TODO Seats Frame event handlers
+	private void seatsFrameEventHandler() {
+		loginWindow.getLoginButton().addActionListener((ActionEvent e) ->{
+			
+		});	
+	}
+	
+	
+	
+	
 	
 }

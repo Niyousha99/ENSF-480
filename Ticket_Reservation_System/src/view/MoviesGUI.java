@@ -5,59 +5,65 @@ import java.awt.*;
 import javax.swing.*;
 import java.util.ArrayList;
 
-// TODO fix sizing of movie posters
+// TODO Make displayMovies dynamic and add view showtimes button
 
 public class MoviesGUI extends JFrame{
 	/**
 	 * Components of the frame
 	 */
-	private JButton viewShowtimes;
+	private ArrayList<JButton> viewShowtimes;
 	
 	/**
 	 * Constructs a MainFrame object
 	 */
 	public MoviesGUI(ArrayList<Movie> movies) {
 		super("Browse Movies");
-		setBounds(200, 100, 1500, 800);
+		setBounds(500, 100, 1000, 800);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBackground(Color.BLACK);
 		setLayout(new BorderLayout());
+		//viewShowtimes = new ArrayList<JButton>(movies.size()); // one "view showtimes" button per movie
 		
 		displayMovies(movies);
-		//pack();
-	//	setMinimumSize(getPreferredSize());
 	}
 	
 	// each second column gets the next movie.toString
 	private void displayMovies(ArrayList<Movie> movies) {
+		JPanel panel = new JPanel();
+		panel.setLayout(new GridLayout(0, 2, 50, 50)); // any number of rows and 2 columns (movie poster and description text)
+		panel.setBackground(Color.BLACK);
+		
 		// parse movie titles if needed to find matching movie poster images in img
+		// or just rename jpg file names according to movie titles stored in DB 
 		
 		/*
 		for (Movie m: movies) {
-			JLabel poster = new JLabel(new ImageIcon("src/img/______"));
-			add(poster);
+			MoviePosterGUI poster = new MoviePosterGUI("src/img/[MOVIE_TITLE].jpg"); // stringbuilder
+			panel.add(poster.getPoster());
+			
+			// create movie description area beside movie poster
+			JPanel desArea = new JPanel();
+			desArea.setLayout(null);
+			
 			JTextArea text = new JTextArea();
+			text.setBounds(10, 10, 200, 100);
 			text.setEditable(false);
 			text.setFont(new Font("Arial", Font.BOLD, 15));
 			text.setLineWrap(true);
 			text.setText(m.toString());
+			desArea.add(text);
+			
+			ViewShowtimesButton button = new ViewShowtimesButton("view showtimes", m);
+			button.setBounds(10, 110, 80, 25);
+			desArea.add(button);
 		}
+		
 		*/
 		// For now, just hardcoding the list of movies....
 		
-		JPanel panel = new JPanel();
-		panel.setLayout(new GridLayout(0, 2, 50, 50)); // any number of rows and 2 columns (movie poster and desciption text)
-		panel.setBackground(Color.BLACK);
+		MoviePosterGUI poster1 = new MoviePosterGUI("Avengers");
+		panel.add(poster1.getPoster());
 		
-		
-		ImageIcon image1 = new ImageIcon("src/img/avengers.jpg");
-		Image image = image1.getImage(); // transform it 
-		Image newimg1 = image.getScaledInstance(500, 700, java.awt.Image.SCALE_SMOOTH); // scale it the smooth way  
-		image1 = new ImageIcon(newimg1);  // transform it back
-		JLabel poster1 = new JLabel(image1);
-		poster1.setHorizontalAlignment(JLabel.CENTER);
-        poster1.setVerticalAlignment(JLabel.CENTER);
-		panel.add(poster1);
 		JTextArea text1 = new JTextArea();
 		text1.setBackground(Color.BLACK);
 		text1.setForeground(Color.WHITE);
@@ -68,14 +74,9 @@ public class MoviesGUI extends JFrame{
 		text1.setText(d1);
 		panel.add(text1);
 		
-		ImageIcon image2 = new ImageIcon("src/img/lion_king.jpg");
-		Image getImage2 = image2.getImage(); // transform it 
-		Image newimg2 = getImage2.getScaledInstance(500, 700, java.awt.Image.SCALE_SMOOTH); // scale it the smooth way  
-		image2 = new ImageIcon(newimg2);  // transform it back
-		JLabel poster2 = new JLabel(image2);
-		poster2.setHorizontalAlignment(JLabel.CENTER);
-        poster2.setVerticalAlignment(JLabel.CENTER);
-		panel.add(poster2);
+		MoviePosterGUI poster2 = new MoviePosterGUI("Lion King");
+		panel.add(poster2.getPoster());
+
 		JTextArea text2 = new JTextArea();
 		text2.setBackground(Color.BLACK);
 		text2.setForeground(Color.WHITE);
@@ -86,14 +87,9 @@ public class MoviesGUI extends JFrame{
 		text2.setText(d2);
 		panel.add(text2);
 		
-		ImageIcon image3 = new ImageIcon("src/img/top_gun.jpg");
-		Image getImage3 = image3.getImage(); // transform it 
-		Image newimg3 = getImage3.getScaledInstance(500, 700, java.awt.Image.SCALE_SMOOTH); // scale it the smooth way  
-		image3 = new ImageIcon(newimg3);  // transform it back
-		JLabel poster3 = new JLabel(image3);
-		poster3.setHorizontalAlignment(JLabel.CENTER);
-        poster3.setVerticalAlignment(JLabel.CENTER);
-		panel.add(poster3);
+		MoviePosterGUI poster3 = new MoviePosterGUI("Top Gun");
+		panel.add(poster3.getPoster());
+		
 		JTextArea text3 = new JTextArea();
 		text3.setBackground(Color.BLACK);
 		text3.setForeground(Color.WHITE);
@@ -104,14 +100,10 @@ public class MoviesGUI extends JFrame{
 		text3.setText(d3);
 		panel.add(text3);
 		
-		ImageIcon image4 = new ImageIcon("src/img/debugger.jpg");
-		Image getImage4 = image4.getImage(); // transform it 
-		Image newimg4 = getImage4.getScaledInstance(500, 700, java.awt.Image.SCALE_SMOOTH); // scale it the smooth way  
-		image3 = new ImageIcon(newimg4);  // transform it back
-		JLabel poster4 = new JLabel(image4);
-		poster4.setHorizontalAlignment(JLabel.CENTER);
-        poster4.setVerticalAlignment(JLabel.CENTER);
-		panel.add(poster4);
+		
+		MoviePosterGUI poster4 = new MoviePosterGUI("The Debugger");
+		panel.add(poster4.getPoster());
+		
 		JTextArea text4 = new JTextArea();
 		text4.setBackground(Color.BLACK);
 		text4.setForeground(Color.WHITE);
@@ -121,13 +113,13 @@ public class MoviesGUI extends JFrame{
 		String d4 = "The Debugger";
 		text4.setText(d4);
 		panel.add(text4);
+		
 		add(panel, BorderLayout.CENTER);
 		JScrollPane scrollPanel = new JScrollPane(panel, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 		add(scrollPanel, BorderLayout.CENTER);
 		
 	}
 	
-	public JButton getViewShowtimesButton() {
-		return viewShowtimes;
-	}
+	public ArrayList<JButton> getViewShowtimesButtons() {return viewShowtimes;}
+	
 }

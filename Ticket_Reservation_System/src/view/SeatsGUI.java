@@ -1,6 +1,8 @@
 package view;
+import model.*;
 
 import java.awt.GridLayout;
+import java.util.ArrayList;
 
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
@@ -11,9 +13,11 @@ import javax.swing.JLabel;
 public class SeatsGUI extends JFrame{
 	
 	/**
-	 * Components of the frame
+	 * Components of the frame 
 	 */
-	//private JButton 
+	private Button reserve, proceed, back;
+	
+	private ArrayList<Seat> selectedSeats;
 	
 	public SeatsGUI() {
 		super("View Seats");
@@ -22,7 +26,7 @@ public class SeatsGUI extends JFrame{
 		
 		setLayout(new GridLayout());
 		
-		JLabel background = new JLabel(new ImageIcon("img/MainFrame_background.jpg"));
+		JLabel background = new JLabel(new ImageIcon("img/seats_background.png"));
 		background.setLayout(new BoxLayout(background, BoxLayout.PAGE_AXIS));
 		
 		
@@ -30,5 +34,26 @@ public class SeatsGUI extends JFrame{
 		
 		add(background);
 		pack();
+	}
+	
+	// TODO add error-checking: if seat not available
+	public void selectSeat(Seat selection) {
+		selectedSeats.add(selection);
+	}
+
+	public Button getReserveButton() {
+		return reserve;
+	}
+
+	public Button getProceedButton() {
+		return proceed;
+	}
+
+	public Button getBackButton() {
+		return back;
+	}
+
+	public ArrayList<Seat> getSelectedSeats() {
+		return selectedSeats;
 	}
 }
