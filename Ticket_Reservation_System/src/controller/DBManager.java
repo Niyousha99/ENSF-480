@@ -6,8 +6,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-
+import java.sql.Driver;
 import model.*;
+import java.sql.*; 
+
 
 // establish connection to MySQL
 // create business logic in backend based on tables (theater, movies, registered users, etc.)
@@ -17,12 +19,15 @@ public class DBManager {
 	private ArrayList<Movie> movies;
 	private ArrayList<Account> accounts;
 	
+	
 	public DBManager() {
 		setMovies(new ArrayList<Movie>());
 		setAccounts(new ArrayList<Account>());
 	}
 	
 	public void connectToLoadDB(String url, String u, String p) throws SQLException {
+		//Driver driver = new com.mysql.cj.jdbc.Driver(); 
+		//DriverManager.registerDriver(driver);
 		Connection dbConnection = DriverManager.getConnection(url, u, p);
 		loadDB(dbConnection);
 		dbConnection.close();
@@ -41,11 +46,11 @@ public class DBManager {
 	
 	private void loadMovies(Connection dbConnection) throws SQLException {
 		Statement dbStatement = dbConnection.createStatement();
-		ResultSet movieResults = dbStatement.executeQuery("SELECT * FROM theater.movie_list"); // TODO correct query
+		ResultSet movieResults = dbStatement.executeQuery("SELECT * FROM ticket_reservation_backend.movies"); // TODO correct query
 		
 		while(movieResults.next()) {
-			String movieName = movieResults.getString("movie_name");
-			String movieDesc = movieResults.getString("movie_desc");
+			String movieName = movieResults.getString("movie");
+			String movieDesc = movieResults.getString("description");
 			Movie newMovie = new Movie(movieName, movieDesc);
 			loadShowtimes(dbConnection, newMovie);
 			movies.add(newMovie);
@@ -55,11 +60,11 @@ public class DBManager {
 	private void loadShowtimes(Connection dbConnection, Movie movie) throws SQLException {
 		ArrayList <Showtime> showtimes = new ArrayList<Showtime>();
 		Statement dbStatement = dbConnection.createStatement();
-		ResultSet showtimeResults = dbStatement.executeQuery("SELECT * FROM theater.showtime_list WHERE movie_name = '" 
+		ResultSet showtimeResults = dbStatement.executeQuery("SELECT * FROM ticket_reservation_backend.showtimes WHERE movie = '" 
 				+ movie.getTitle() + "'"); // TODO correct query
 		while(showtimeResults.next()) {
-			String [] showdate = showtimeResults.getString("show_date").split("/");
-			String [] showtime = showtimeResults.getString("show_time").split(":");
+			String [] showdate = showtimeResults.getString("date").split("/");
+			String [] showtime = showtimeResults.getString("time").split(":");
 			Showtime newShowtime = new Showtime(showdate[0], showdate[1], showdate[2], 
 					Integer.parseInt(showtime[0]), Integer.parseInt(showtime[1]));
 			loadSeats(dbConnection, newShowtime);

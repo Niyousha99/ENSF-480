@@ -17,10 +17,12 @@ public class MasterController implements Constants{
 		
 	}
 	
-	public static void main (String args[]) {
+	public static void main (String args[]) throws SQLException {
 		// instantiate DBManager and get all required data from DB
 		// to communicate between other controllers, models, views
 		
 		GUIController gui = new GUIController();
+		DBManager db = new DBManager();
+		db.connectToLoadDB(DBURL, DBUSERNAME, DBPASSWORD);
 	}
 }
