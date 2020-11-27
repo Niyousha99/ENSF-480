@@ -9,12 +9,10 @@ public class Date {
 		day = d;
 	}
 	
+	// Returns date as a string
 	@Override
 	public String toString() {
-		String str = "";
-		
-		
-		
+		String str = day + " " + month + ", " + year;
 		return str;
 	}
 }
