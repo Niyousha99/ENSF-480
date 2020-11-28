@@ -6,8 +6,8 @@ public interface Constants {
 	public static final int SEATCOLS = 6;
 	
 	// Credentials to connect to database
-	public static final String DBURL = "jdbc:mysql://127.0.0.1:3306/ticket_reservation_backend?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
+	public static final String DBURL = "jdbc:mysql://localhost/ticket_reservation_backend?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
 	public static final String DBUSERNAME = "root";
-	public static final String DBPASSWORD = "Aditya6737!";
+	public static final String DBPASSWORD = "Nr!!!197219748";
 }
 //L40532734b? 

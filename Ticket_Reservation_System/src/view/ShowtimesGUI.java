@@ -15,7 +15,8 @@ import model.*;
 
 public class ShowtimesGUI extends JFrame{
 	private Button viewSeatsButton;
-
+	private JComboBox<String> showtimeMenu;
+	
 	public ShowtimesGUI(Movie m) {
 		super("Browse Movies");
 		setBounds(700, 100, 800, 500);
@@ -47,7 +48,7 @@ public class ShowtimesGUI extends JFrame{
 		
 		// create dropdown menu to select showtime
 		String[] times = m.getShowtimeChoices();
-	    final JComboBox<String> showtimeMenu = new JComboBox<String>(times);
+	    showtimeMenu = new JComboBox<String>(times);
 	    showtimeMenu.setBounds(10, 110, 80, 25);
 	    movieInfo.add(showtimeMenu);
 	    
@@ -61,4 +62,6 @@ public class ShowtimesGUI extends JFrame{
 	}
 
 	public JButton getViewSeatsButton() {return viewSeatsButton;}
+	
+	public JComboBox<String> getShowtimeMenu(){return showtimeMenu;}
 }

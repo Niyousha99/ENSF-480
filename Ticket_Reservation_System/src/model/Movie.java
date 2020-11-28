@@ -19,6 +19,16 @@ public class Movie {
 		}
 	}
 	
+	public Showtime searchShowtime(String showtime) {
+		for (int i = 0; i < showtimes.size() - 1; i++) {
+			Showtime st = showtimes.get(i);
+			if (st.toString().equalsIgnoreCase(showtime))
+				return st;
+		}
+		
+		return null;
+	}
+	
 	public ArrayList<Showtime> getShowtimes() {return showtimes;}
 	
 	public String[] getShowtimeChoices() {

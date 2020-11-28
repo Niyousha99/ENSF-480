@@ -17,9 +17,10 @@ public class SeatsGUI extends JFrame{
 	 */
 	private Button reserve, proceed, back;
 	
+	private ArrayList<Seat> seats;
 	private ArrayList<Seat> selectedSeats;
 	
-	public SeatsGUI() {
+	public SeatsGUI(ArrayList<Seat> s) {
 		super("View Seats");
 		setBounds(200, 100, 500, 200);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

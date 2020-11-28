@@ -10,9 +10,6 @@ import view.*;
 
 public class MasterController implements Constants{
 	
-	private ArrayList<Movie> movies;
-	private ArrayList<Account> accounts; 
-	
 	public void populateModel() {
 		
 	}
@@ -21,8 +18,8 @@ public class MasterController implements Constants{
 		// instantiate DBManager and get all required data from DB
 		// to communicate between other controllers, models, views
 		
-		GUIController gui = new GUIController();
 		DBManager db = new DBManager();
 		db.connectToLoadDB(DBURL, DBUSERNAME, DBPASSWORD);
+		GUIController gui = new GUIController(db.getMovies(), db.getAccounts());
 	}
 }
