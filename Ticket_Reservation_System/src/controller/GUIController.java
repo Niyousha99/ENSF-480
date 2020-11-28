@@ -58,7 +58,7 @@ public class GUIController {
 	}
 	
 	private void initSeatsFrame() {
-		seatsFrame = new SeatsGUI();
+		//seatsFrame = new SeatsGUI();
 		seatsFrame.setVisible(true);
 		seatsFrameEventHandler();
 	}
@@ -117,19 +117,19 @@ public class GUIController {
 	}
 	
 	
-	private void showtimesFrameEventHandler(Movie m) {
-		
-		showtimesFrame.getShowtimeMenu().addActionListener((ActionEvent e) ->{
-			String selectedShowtime = (String)(((JComboBox)e.getSource()).getSelectedItem());
-			
-			showtimesFrame.getViewSeatsButton().addActionListener((ActionEvent e2) ->{
-				initSeatsFrame()
-			});
-		});	
-		
-		
-		
-	}
+//	private void showtimesFrameEventHandler(Movie m) {
+//		
+//		showtimesFrame.getShowtimeMenu().addActionListener((ActionEvent e) ->{
+//			String selectedShowtime = (String)(((JComboBox)e.getSource()).getSelectedItem());
+//			
+//			showtimesFrame.getViewSeatsButton().addActionListener((ActionEvent e2) ->{
+//				initSeatsFrame()
+//			});
+//		});	
+//		
+//		
+//		
+//	}
 	
 	
 	
