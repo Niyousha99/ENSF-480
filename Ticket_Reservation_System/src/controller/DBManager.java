@@ -50,12 +50,12 @@ public class DBManager {
 			String movieName = movieResults.getString("movie");
 			String movieDesc = movieResults.getString("description");
 			Movie newMovie = new Movie(movieName, movieDesc);
-			loadShowtimes(dbConnection, newMovie);
+			newMovie.setShowtimes(loadShowtimes(dbConnection, newMovie));
 			movies.add(newMovie);
 		}
 	}
 	
-	private void loadShowtimes(Connection dbConnection, Movie movie) throws SQLException {
+	private ArrayList<Showtime> loadShowtimes(Connection dbConnection, Movie movie) throws SQLException {
 		ArrayList <Showtime> showtimes = new ArrayList<Showtime>();
 		Statement dbStatement = dbConnection.createStatement();
 		ResultSet showtimeResults = dbStatement.executeQuery("SELECT * FROM ticket_reservation_backend.showtimes WHERE movie = '" 
@@ -75,6 +75,7 @@ public class DBManager {
 					hr, sec);
 			showtimes.add(newShowtime);
 		}
+		return showtimes;
 	}
 	
 	private void loadAccounts(Connection dbConnection) throws SQLException {
