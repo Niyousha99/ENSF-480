@@ -79,15 +79,16 @@ public class DBManager {
 	
 	private void loadAccounts(Connection dbConnection) throws SQLException {
 		Statement dbStatement = dbConnection.createStatement();
-		ResultSet accountResults = dbStatement.executeQuery("SELECT * FROM theater.account_list");
+		ResultSet accountResults = dbStatement.executeQuery("SELECT * FROM ticket_reservation_backend.registeredUsers");
 		while(accountResults.next()) {
-			String password = accountResults.getString("user_pword");
-			String cardNumber = accountResults.getString("user_cardnum");
-			String bank = accountResults.getString("user_bankname");
-			String email = accountResults.getString("user_email"); // maybe add to Account class
+			String password = accountResults.getString("password");
+			String cardNumber = accountResults.getString("creditCard");
+			String bank = accountResults.getString("bankName");
+			String email = accountResults.getString("email"); // maybe add to Account class
 			Account newAccount = new Account(password, cardNumber, bank);
 			accounts.add(newAccount);
 		}
+		//System.out.println("yes we are goood to go");
 	}
 	
 	public void addAccountToDB(Account account, Connection dbConnection) throws SQLException {
