@@ -3,18 +3,24 @@ import view.*;
 import model.*;
 
 import java.awt.event.ActionEvent;
+import java.util.ArrayList;
 
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 
 public class GUIController {
+	private ArrayList<Movie> movies;
+	private ArrayList<Account> accounts; 
 	private MainGUI mainFrame;
 	private LoginGUI loginWindow;
 	private MoviesGUI moviesFrame;
 	private ShowtimesGUI showtimesFrame;
 	private SeatsGUI seatsFrame;
 	
-	public GUIController() {
+	public GUIController(ArrayList<Movie> m, ArrayList<Account> a) {
+		movies = m;
+		accounts = a;
 		initMainFrame();
 	}
 	
@@ -45,9 +51,10 @@ public class GUIController {
 		
 	}
 	
-	private void initShowtimesFrame() {
+	private void initShowtimesFrame(Movie m) {
 		
-		//showtimesFrame = new ShowtimesGUI();
+		//showtimesFrame = new ShowtimesGUI(m);
+		// 
 	}
 	
 	private void initSeatsFrame() {
@@ -108,6 +115,23 @@ public class GUIController {
 			
 		}
 	}
+	
+	
+	private void showtimesFrameEventHandler(Movie m) {
+		
+		showtimesFrame.getShowtimeMenu().addActionListener((ActionEvent e) ->{
+			String selectedShowtime = (String)(((JComboBox)e.getSource()).getSelectedItem());
+			
+			showtimesFrame.getViewSeatsButton().addActionListener((ActionEvent e2) ->{
+				initSeatsFrame()
+			});
+		});	
+		
+		
+		
+	}
+	
+	
 	
 	// TODO Seats Frame event handlers
 	private void seatsFrameEventHandler() {

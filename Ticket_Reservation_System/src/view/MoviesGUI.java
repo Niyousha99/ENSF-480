@@ -22,7 +22,7 @@ public class MoviesGUI extends JFrame{
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBackground(Color.BLACK);
 		setLayout(new BorderLayout());
-		viewShowtimes = new ArrayList<JButton>(movies.size()); // one "view showtimes" button per movie
+		//viewShowtimes = new ArrayList<JButton>(movies.size()); // one "view showtimes" button per movie
 		
 		displayMovies(movies);
 	}
