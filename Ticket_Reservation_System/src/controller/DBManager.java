@@ -61,25 +61,13 @@ public class DBManager {
 		ArrayList <Showtime> showtimes = new ArrayList<Showtime>();
 		Statement dbStatement = dbConnection.createStatement();
 		ResultSet showtimeResults = dbStatement.executeQuery("SELECT * FROM ticket_reservation_backend.showtimes WHERE movie = '" 
-				+ movie.getTitle() + "'"); // TODO correct query
+				+ movie.getTitle() + "'");
 		while(showtimeResults.next()) {
 			String [] showdate = showtimeResults.getString("date").split("/");
 			String [] showtime = showtimeResults.getString("time").split(":");
 			Showtime newShowtime = new Showtime(showdate[0], showdate[1], showdate[2], 
 					Integer.parseInt(showtime[0]), Integer.parseInt(showtime[1]));
-			loadSeats(dbConnection, newShowtime);
 			showtimes.add(newShowtime);
-		}
-	}
-	
-	private void loadSeats(Connection dbConnection, Showtime showtime) throws SQLException {
-		Statement dbStatement = dbConnection.createStatement();
-		ResultSet seatResults = dbStatement.executeQuery("SELECT * FROM theater.seat_list WHERE showtime_id = '");
-		while(seatResults.next()) {
-			char row = seatResults.getString("row").charAt(0);
-			int col = seatResults.getInt("col");
-			Seat newSeat = new Seat(row, col);
-			newSeat.setReserved(seatResults.getBoolean("reserved"));
 		}
 	}
 	
