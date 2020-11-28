@@ -26,8 +26,6 @@ public class DBManager {
 	}
 	
 	public void connectToLoadDB(String url, String u, String p) throws SQLException {
-		//Driver driver = new com.mysql.cj.jdbc.Driver(); 
-		//DriverManager.registerDriver(driver);
 		Connection dbConnection = DriverManager.getConnection(url, u, p);
 		loadDB(dbConnection);
 		dbConnection.close();
@@ -65,8 +63,16 @@ public class DBManager {
 		while(showtimeResults.next()) {
 			String [] showdate = showtimeResults.getString("date").split("/");
 			String [] showtime = showtimeResults.getString("time").split(":");
-			Showtime newShowtime = new Showtime(showdate[0], showdate[1], showdate[2], 
-					Integer.parseInt(showtime[0]), Integer.parseInt(showtime[1]));
+			int hr;
+			if(showtime[1].contains("pm")) {
+				hr = Integer.parseInt(showtime[0]) + 12;
+			}
+			else {
+				hr = Integer.parseInt(showtime[0]);
+			}
+			int sec = Integer.parseInt(showtime[1].substring(0, showtime[1].length()-2));
+			Showtime newShowtime = new Showtime(showdate[2], showdate[0], showdate[1], 
+					hr, sec);
 			showtimes.add(newShowtime);
 		}
 	}
