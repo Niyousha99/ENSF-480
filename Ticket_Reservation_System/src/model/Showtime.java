@@ -8,9 +8,18 @@ public class Showtime implements Constants {
 		private Date date;
 		private Time time;
 		
-		public Showtime(String y, String month, String d, int h, int min) {
+//		public Showtime(String y, String month, String d, int h, int min) {
+//			date = new Date(y, month, d);
+//			time = new Time(h, min);
+//			//seats = new ArrayList<ArrayList<Seat>>();
+//			seats = new Seat[SEATROWS][SEATCOLS];		
+//			initializeSeats();
+//			//displaySeats();
+//
+//		}
+		public Showtime(String y, String month, String d, String t) {
 			date = new Date(y, month, d);
-			time = new Time(h, min);
+			time = new Time(t);
 			//seats = new ArrayList<ArrayList<Seat>>();
 			seats = new Seat[SEATROWS][SEATCOLS];		
 			initializeSeats();

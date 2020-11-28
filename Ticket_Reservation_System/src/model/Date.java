@@ -36,7 +36,7 @@ public class Date {
 	// Returns date as a string
 	@Override
 	public String toString() {
-		String str = day + " " + month + ", " + year;
+		String str = day + "/" + month + "/" + year;
 		return str;
 	}
 }

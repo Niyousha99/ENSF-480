@@ -50,31 +50,32 @@ public class DBManager {
 			String movieName = movieResults.getString("movie");
 			String movieDesc = movieResults.getString("description");
 			Movie newMovie = new Movie(movieName, movieDesc);
-			loadShowtimes(dbConnection, newMovie);
+			newMovie.setShowtimes(loadShowtimes(dbConnection, newMovie));
 			movies.add(newMovie);
 		}
 	}
 	
-	private void loadShowtimes(Connection dbConnection, Movie movie) throws SQLException {
+	private ArrayList<Showtime> loadShowtimes(Connection dbConnection, Movie movie) throws SQLException {
 		ArrayList <Showtime> showtimes = new ArrayList<Showtime>();
 		Statement dbStatement = dbConnection.createStatement();
 		ResultSet showtimeResults = dbStatement.executeQuery("SELECT * FROM ticket_reservation_backend.showtimes WHERE movie = '" 
 				+ movie.getTitle() + "'");
 		while(showtimeResults.next()) {
 			String [] showdate = showtimeResults.getString("date").split("/");
-			String [] showtime = showtimeResults.getString("time").split(":");
-			int hr;
-			if(showtime[1].contains("pm")) {
-				hr = Integer.parseInt(showtime[0]) + 12;
-			}
-			else {
-				hr = Integer.parseInt(showtime[0]);
-			}
-			int sec = Integer.parseInt(showtime[1].substring(0, showtime[1].length()-2));
-			Showtime newShowtime = new Showtime(showdate[2], showdate[0], showdate[1], 
-					hr, sec);
+			//String [] showtime = showtimeResults.getString("time").split(":");
+			String showtime = showtimeResults.getString("time");
+//			int hr;
+//			if(showtime[1].contains("pm")) {
+//				hr = Integer.parseInt(showtime[0]);
+//			}
+//			else {
+//				hr = Integer.parseInt(showtime[0]);
+//			}
+//			int sec = Integer.parseInt(showtime[1].substring(0, showtime[1].length()-2));
+			Showtime newShowtime = new Showtime(showdate[2], showdate[0], showdate[1], showtime);
 			showtimes.add(newShowtime);
 		}
+		return showtimes;
 	}
 	
 	private void loadAccounts(Connection dbConnection) throws SQLException {

@@ -15,7 +15,12 @@ public class MoviePosterGUI {
 					
 		// re-scale image
 		Image image = imageIcon.getImage();
-		Image newImage = image.getScaledInstance(400, 700, java.awt.Image.SCALE_SMOOTH);
+		Image newImage;
+		if (movieTitle.equalsIgnoreCase("Avengers"))
+			newImage = image.getScaledInstance(250, 450, java.awt.Image.SCALE_SMOOTH);
+		else
+			newImage = image.getScaledInstance(300, 450, java.awt.Image.SCALE_SMOOTH);
+		
 		imageIcon = new ImageIcon(newImage);
 		
 		// create movie poster with image

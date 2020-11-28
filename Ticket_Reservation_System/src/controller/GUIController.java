@@ -11,11 +11,11 @@ import javax.swing.JFrame;
 
 public class GUIController {
 	private ArrayList<Movie> movies;
-	private ArrayList<Account> accounts; 
+	private ArrayList<Account> accounts;
+	
 	private MainGUI mainFrame;
 	private LoginGUI loginWindow;
 	private MoviesGUI moviesFrame;
-	private ShowtimesGUI showtimesFrame;
 	private SeatsGUI seatsFrame;
 	
 	public GUIController(ArrayList<Movie> m, ArrayList<Account> a) {
@@ -44,10 +44,9 @@ public class GUIController {
 	
 	
 	private void initMoviesFrame() {
-		moviesFrame = new MoviesGUI(null); // TODO pass movies information 
+		moviesFrame = new MoviesGUI(movies);
 		moviesFrame.setVisible(true);
-		// TODO uncomment after movies is dynamic
-		//moviesFrameEventHandler();
+		moviesFrameEventHandler();
 		
 	}
 	
@@ -106,42 +105,27 @@ public class GUIController {
 	// TODO Movies Frame event handlers
 
 	private void moviesFrameEventHandler() {
-		for (JButton b: moviesFrame.getViewShowtimesButtons()) {
+		
+		moviesFrame.getShowtimeMenu().addActionListener((ActionEvent e) ->{
+			String selectedShowtime = (String)(((JComboBox)e.getSource()).getSelectedItem());
+			
+			
+		});	
+		
+		for (JButton b: moviesFrame.getBookSeatsButtons()) {
 			b.addActionListener((ActionEvent e) ->{
-				//TODO init showtimes GUI and pass movie info
 				
 			});
 			
 			
 		}
 	}
-	
-	
-//	private void showtimesFrameEventHandler(Movie m) {
-//		
-//		showtimesFrame.getShowtimeMenu().addActionListener((ActionEvent e) ->{
-//			String selectedShowtime = (String)(((JComboBox)e.getSource()).getSelectedItem());
-//			
-//			showtimesFrame.getViewSeatsButton().addActionListener((ActionEvent e2) ->{
-//				initSeatsFrame()
-//			});
-//		});	
-//		
-//		
-//		
-//	}
-	
-	
-	
+
 	// TODO Seats Frame event handlers
 	private void seatsFrameEventHandler() {
 		loginWindow.getLoginButton().addActionListener((ActionEvent e) ->{
 			
 		});	
 	}
-	
-	
-	
-	
-	
+
 }
