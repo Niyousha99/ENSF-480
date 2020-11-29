@@ -17,6 +17,9 @@ public class GUIController {
 	private LoginGUI loginWindow;
 	private MoviesGUI moviesFrame;
 	private SeatsGUI seatsFrame;
+	private CheckoutGUI checkoutFrame;
+	private CancelTicketGUI cancelTicketFrame;
+	private EmailGUI emailFrame;
 	
 	public GUIController(ArrayList<Movie> m, ArrayList<Account> a) {
 		movies = m;
@@ -30,9 +33,9 @@ public class GUIController {
 		mainFrameEventHandler();
 	}
 	
-	
+	// TODO create CancelTicket GUI
 	private void initCancelTicketFrame() {
-		// TODO Auto-generated method stub
+		
 		
 	}
 
@@ -42,21 +45,51 @@ public class GUIController {
 		loginEventHandler();
 	}
 	
-	
 	private void initMoviesFrame() {
 		moviesFrame = new MoviesGUI(movies);
 		moviesFrame.setVisible(true);
-//		System.out.println(moviesFrame.getSelectedMovie().toString());
-//		System.out.println(moviesFrame.getSelectedShowtime());
-//		initSeatsFrame(moviesFrame.getSelectedMovie(), moviesFrame.getSelectedShowtime());
-//		
+		moviesFrameEventHandler();	
 	}
 	
+	private void moviesFrameEventHandler() {
+		int i = 0;
+		for (JComboBox<String> cb: moviesFrame.getShowtimeMenus()) {
+			BookSeatsButton b = moviesFrame.getBookSeatButtons().get(i);
+			
+			cb.addActionListener((ActionEvent e) ->{
+				// if showtime is selected
+				if(cb.getSelectedIndex() != -1) {
+					b.setEnabled(true);
+					b.addActionListener((ActionEvent be) ->{
+						Movie selectedMovie = b.getMovie();
+						String selectedShowtime = (String)(((JComboBox)e.getSource()).getSelectedItem());
+						moviesFrame.dispose();
+						initSeatsFrame(selectedMovie, selectedShowtime);
+					});	
+				}
+			});
+			i++;
+		}
+	}
+
 	private void initSeatsFrame(Movie selectedMovie, String selectedShowtime) {
 		Showtime showtime = selectedMovie.searchShowtime(selectedShowtime);
 		seatsFrame = new SeatsGUI(showtime.getSeats());
 		seatsFrame.setVisible(true);
-		seatsFrameEventHandler();
+		seatsFrameEventHandler(selectedMovie, selectedShowtime);
+	}
+	
+	// TODO create checkout GUI
+	private void initCheckoutFrame(Movie selectedMovie, String selectedShowtime, ArrayList<Seat> selectedSeats) {
+		checkoutFrame = new CheckoutGUI(selectedMovie, selectedShowtime, selectedSeats);
+		checkoutFrame.setVisible(true);
+		checkoutFrameEventHandler();
+		
+	}
+	
+	// TODO create email GUI
+	private void initEmailFrame() {
+		
 	}
 	
 	/**
@@ -86,9 +119,19 @@ public class GUIController {
 			initCancelTicketFrame();
 		});
 	}
+
+	private void seatsFrameEventHandler(Movie selectedMovie, String selectedShowtime) {
+		seatsFrame.getRefreshButton().addActionListener((ActionEvent e) ->{
+			seatsFrame.refresh();
+		});	
+		
+		seatsFrame.getReserveButton().addActionListener((ActionEvent e) ->{
+			seatsFrame.dispose();
+			initCheckoutFrame(selectedMovie, selectedShowtime, seatsFrame.getSelectedSeats());
+		});	
+	}
 	
-	// TODO Login event handlers
-	
+	// TODO the following event handlers
 	private void loginEventHandler() {
 		loginWindow.getLoginButton().addActionListener((ActionEvent e) ->{
 					
@@ -98,13 +141,12 @@ public class GUIController {
 			
 		});
 	}
-	
 
-	// TODO Seats Frame event handlers
-	private void seatsFrameEventHandler() {
-		loginWindow.getLoginButton().addActionListener((ActionEvent e) ->{
-			
-		});	
+	private void checkoutFrameEventHandler() {
+		
 	}
-
+	
+	private void cancelTicketEventHandler() {
+		
+	}
 }

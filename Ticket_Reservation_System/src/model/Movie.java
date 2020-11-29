@@ -20,8 +20,7 @@ public class Movie {
 	}
 	
 	public Showtime searchShowtime(String showtime) {
-		for (int i = 0; i < showtimes.size() - 1; i++) {
-			Showtime st = showtimes.get(i);
+		for (Showtime st: showtimes) {
 			if (st.toString().equalsIgnoreCase(showtime))
 				return st;
 		}

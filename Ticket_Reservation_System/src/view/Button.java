@@ -11,7 +11,7 @@ import javax.swing.JButton;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
-class Button extends JButton{
+public class Button extends JButton{
 	private Color top, bottom;
     private Paint gradient;
     private Point[] stopPoints = new Point[2];

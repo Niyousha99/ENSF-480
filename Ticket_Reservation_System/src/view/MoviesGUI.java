@@ -37,7 +37,6 @@ public class MoviesGUI extends JFrame{
 		showtimeMenus = new ArrayList<JComboBox<String>>();
 		
 		displayMovies();
-		createEventHandlers();
 	}
 	
 	// each second column gets the next movie.toString
@@ -96,23 +95,9 @@ public class MoviesGUI extends JFrame{
 		add(scrollPanel, BorderLayout.CENTER);
 	}
 	
-	private void createEventHandlers() {
-		int i = 0;
-		for (JComboBox<String> cb: showtimeMenus) {
-			BookSeatsButton b = bookSeats.get(i);
-			
-			cb.addActionListener((ActionEvent e) ->{
-				// if showtime is selected
-				if(cb.getSelectedIndex() != -1) {
-					b.setEnabled(true);
-					selectedMovie = b.getMovie();
-					selectedShowtime = (String)(((JComboBox)e.getSource()).getSelectedItem());
-				}
-			});
-			
-			i++;
-		}
-	}
+	public ArrayList<BookSeatsButton> getBookSeatButtons(){return bookSeats;}
+	
+	public ArrayList<JComboBox<String>> getShowtimeMenus(){return showtimeMenus;}
 	
 	public String getSelectedShowtime() {return selectedShowtime;}
 

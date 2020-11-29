@@ -1,9 +1,25 @@
 package view;
+import model.*;
+
+import java.awt.GridLayout;
+import java.util.ArrayList;
+
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 public class CheckoutGUI extends JFrame{
+	
+	
+	public CheckoutGUI(Movie selectedMovie, String selectedShowtime, ArrayList<Seat> selectedSeats) {
+		super("Checkout");
+		setBounds(700, 300, 600, 600);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setLayout(new GridLayout());
 
+		// TODO create rest of checkout GUI
+		
+	}
+	
 	
 	/**
 	 * Displays message supplied by the given parameter in a dialog box
