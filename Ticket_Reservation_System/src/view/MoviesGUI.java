@@ -2,38 +2,46 @@ package view;
 import model.*;
 
 import java.awt.*;
+import java.awt.event.ActionEvent;
 import javax.swing.*;
-import javax.swing.text.StyleConstants;
 
 import java.util.ArrayList;
-
-// TODO Make displayMovies dynamic and add view showtimes button
 
 public class MoviesGUI extends JFrame{
 	/**
 	 * Components of the frame
 	 */
 	// one "book seats" button per showtime per movie
-	private ArrayList<JButton> bookSeats;
+	private ArrayList<BookSeatsButton> bookSeats;
 	
-	private JComboBox<String> showtimeMenu;
+	private ArrayList<JComboBox<String>> showtimeMenus;
+	
+	private ArrayList<Movie> movies;
+	
+	private String selectedShowtime;
+	
+	private Movie selectedMovie;
 	
 	/**
 	 * Constructs a MainFrame object
 	 */
-	public MoviesGUI(ArrayList<Movie> movies) {
+	public MoviesGUI(ArrayList<Movie> m) {
 		super("Browse Movies");
 		setBounds(500, 100, 1000, 800);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBackground(Color.BLACK);
 		setLayout(new BorderLayout());
-		bookSeats = new ArrayList<JButton>(movies.size()); 
 		
-		displayMovies(movies);
+		movies = m;
+		bookSeats = new ArrayList<BookSeatsButton>(movies.size()); 
+		showtimeMenus = new ArrayList<JComboBox<String>>();
+		
+		displayMovies();
+		createEventHandlers();
 	}
 	
 	// each second column gets the next movie.toString
-	private void displayMovies(ArrayList<Movie> movies) {
+	private void displayMovies() {
 		JPanel panel = new JPanel();
 		panel.setLayout(new GridLayout(0, 2, 50, 50));
 		panel.setBackground(Color.BLACK);
@@ -66,17 +74,19 @@ public class MoviesGUI extends JFrame{
 			label.setFont(new Font("Arial", Font.BOLD, 10));
 			desArea.add(label);
 			
-			String[] times = m.getShowtimeChoices();
-		    showtimeMenu = new JComboBox<String>(times);
-		    showtimeMenu.setBounds(10, 300, 180, 25);
-		    desArea.add(showtimeMenu);
+			JComboBox<String> menu = new JComboBox<String>(m.getShowtimeChoices());
+		    menu.setBounds(10, 300, 180, 25);
+		    showtimeMenus.add(menu);
+		    desArea.add(menu);
 		    
 			// create button to book seats for selected showtime of the movie
 			BookSeatsButton button = new BookSeatsButton("book seats", m);
+			button.setMovie(m);
 			button.setEnabled(false);
 			button.setBounds(10, 400, 130, 25);
 			bookSeats.add(button);
 			desArea.add(button);
+
 			panel.add(desArea);
 		}	
 		
@@ -86,7 +96,25 @@ public class MoviesGUI extends JFrame{
 		add(scrollPanel, BorderLayout.CENTER);
 	}
 	
-	public ArrayList<JButton> getBookSeatsButtons() {return bookSeats;}
+	private void createEventHandlers() {
+		int i = 0;
+		for (JComboBox<String> cb: showtimeMenus) {
+			BookSeatsButton b = bookSeats.get(i);
+			
+			cb.addActionListener((ActionEvent e) ->{
+				// if showtime is selected
+				if(cb.getSelectedIndex() != -1) {
+					b.setEnabled(true);
+					selectedMovie = b.getMovie();
+					selectedShowtime = (String)(((JComboBox)e.getSource()).getSelectedItem());
+				}
+			});
+			
+			i++;
+		}
+	}
 	
-	public JComboBox<String> getShowtimeMenu(){return showtimeMenu;}
+	public String getSelectedShowtime() {return selectedShowtime;}
+
+	public Movie getSelectedMovie() {return selectedMovie;}
 }

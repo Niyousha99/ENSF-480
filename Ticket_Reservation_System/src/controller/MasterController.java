@@ -19,7 +19,6 @@ public class MasterController implements Constants{
 		
 		DBManager db = new DBManager();
 		db.connectToLoadDB(DBURL, DBUSERNAME, DBPASSWORD);
-		
 		GUIController gui = new GUIController(db.getMovies(), db.getAccounts());
 	}
 }

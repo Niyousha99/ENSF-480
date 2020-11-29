@@ -46,18 +46,15 @@ public class GUIController {
 	private void initMoviesFrame() {
 		moviesFrame = new MoviesGUI(movies);
 		moviesFrame.setVisible(true);
-		moviesFrameEventHandler();
-		
+//		System.out.println(moviesFrame.getSelectedMovie().toString());
+//		System.out.println(moviesFrame.getSelectedShowtime());
+//		initSeatsFrame(moviesFrame.getSelectedMovie(), moviesFrame.getSelectedShowtime());
+//		
 	}
 	
-	private void initShowtimesFrame(Movie m) {
-		
-		//showtimesFrame = new ShowtimesGUI(m);
-		// 
-	}
-	
-	private void initSeatsFrame() {
-		//seatsFrame = new SeatsGUI();
+	private void initSeatsFrame(Movie selectedMovie, String selectedShowtime) {
+		Showtime showtime = selectedMovie.searchShowtime(selectedShowtime);
+		seatsFrame = new SeatsGUI(showtime.getSeats());
 		seatsFrame.setVisible(true);
 		seatsFrameEventHandler();
 	}
@@ -102,24 +99,6 @@ public class GUIController {
 		});
 	}
 	
-	// TODO Movies Frame event handlers
-
-	private void moviesFrameEventHandler() {
-		
-		moviesFrame.getShowtimeMenu().addActionListener((ActionEvent e) ->{
-			String selectedShowtime = (String)(((JComboBox)e.getSource()).getSelectedItem());
-			
-			
-		});	
-		
-		for (JButton b: moviesFrame.getBookSeatsButtons()) {
-			b.addActionListener((ActionEvent e) ->{
-				
-			});
-			
-			
-		}
-	}
 
 	// TODO Seats Frame event handlers
 	private void seatsFrameEventHandler() {

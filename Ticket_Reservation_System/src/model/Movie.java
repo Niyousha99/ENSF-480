@@ -33,9 +33,12 @@ public class Movie {
 	
 	public String[] getShowtimeChoices() {
 		String[] times = new String[showtimes.size()];
-		for (int i = 0; i < showtimes.size() - 1; i++) {
+		int i = 0;
+		for (Showtime s: showtimes) {
 			times[i] = showtimes.get(i).toString();
+			i++;
 		}
+		
 		return times;
 	}
 	

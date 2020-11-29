@@ -17,25 +17,31 @@ public class SeatsGUI extends JFrame{
 	 */
 	private Button reserve, proceed, back;
 	
-	private ArrayList<Seat> seats;
+	private Seat[][] seats;
 	private ArrayList<Seat> selectedSeats;
 	
-	public SeatsGUI(ArrayList<Seat> s) {
+	public SeatsGUI(Seat[][] seats) {
 		super("View Seats");
 		setBounds(200, 100, 500, 200);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		
 		setLayout(new GridLayout());
 		
 		JLabel background = new JLabel(new ImageIcon("img/curtains.jpg"));
 		background.setLayout(new BoxLayout(background, BoxLayout.PAGE_AXIS));
 		
-		
+		this.seats = seats; 
+		selectedSeats = new ArrayList<Seat>();
+		displaysSeats();
 		
 		add(background);
 		pack();
 	}
 	
+	private void displaysSeats() {
+		
+		
+	}
+
 	// TODO add error-checking: if seat not available
 	public void selectSeat(Seat selection) {
 		selectedSeats.add(selection);
