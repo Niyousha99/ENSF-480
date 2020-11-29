@@ -68,6 +68,7 @@ public class GUIController {
 					});	
 				}
 			});
+			
 			i++;
 		}
 	}
@@ -116,6 +117,7 @@ public class GUIController {
 		
 		mainFrame.getCancelTicketButton().addActionListener((ActionEvent e) ->{
 			mainFrame.dispose();
+			
 			initCancelTicketFrame();
 		});
 	}
