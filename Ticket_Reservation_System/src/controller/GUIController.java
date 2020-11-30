@@ -3,6 +3,7 @@ import view.*;
 import model.*;
 
 import java.awt.event.ActionEvent;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 import javax.swing.JButton;
@@ -10,23 +11,31 @@ import javax.swing.JComboBox;
 import javax.swing.JFrame;
 
 public class GUIController {
+	private DBManager database;
 	private ArrayList<Movie> movies;
 	private ArrayList<Account> accounts;
+	private User user;
 	
 	private MainGUI mainFrame;
 	private LoginGUI loginWindow;
+	private RegisterGUI registerWindow;
 	private MoviesGUI moviesFrame;
 	private SeatsGUI seatsFrame;
 	private CheckoutGUI checkoutFrame;
 	private CancelTicketGUI cancelTicketFrame;
 	private EmailGUI emailFrame;
 	
-	public GUIController(ArrayList<Movie> m, ArrayList<Account> a) {
-		movies = m;
-		accounts = a;
+	public GUIController(DBManager db) {
+		database = db;
+		populateData();
 		initMainFrame();
 	}
 	
+	private void populateData() {
+		movies = database.getMovies();
+		accounts = database.getAccounts();
+	}
+
 	private void initMainFrame() {
 		mainFrame = new MainGUI();
 		mainFrame.setVisible(true);
@@ -45,10 +54,21 @@ public class GUIController {
 		loginEventHandler();
 	}
 	
+	private void initRegisterFrame() {
+		registerWindow = new RegisterGUI();
+		registerWindow.setVisible(true);
+		registerWindowEventHandler();
+	}
+
 	private void initMoviesFrame() {
 		moviesFrame = new MoviesGUI(movies);
 		moviesFrame.setVisible(true);
 		moviesFrameEventHandler();	
+	}
+	
+	// TODO create email GUI
+	private void initEmailFrame() {
+		// create Email object and pass to EmailGUI
 	}
 	
 	private void moviesFrameEventHandler() {
@@ -85,26 +105,7 @@ public class GUIController {
 		checkoutFrame = new CheckoutGUI(selectedMovie, selectedShowtime, selectedSeats);
 		checkoutFrame.setVisible(true);
 		checkoutFrameEventHandler();
-		
 	}
-	
-	// TODO create email GUI
-	private void initEmailFrame() {
-		// create Email object and pass to EmailGUI
-	}
-	
-	/**
-	 * Switches back to the desired frame supplied by the first parameter by disposing the frame supplied by the second parameter 
-	 * and setting the desired frame to visible.
-	 * 
-	 * @param desiredFrame is the frame to be displayed
-	 * @param disposeFrame is the frame to be disposed
-	 */
-	private void switchFrame(JFrame desiredFrame, JFrame disposeFrame) {
-		disposeFrame.dispose();
-		desiredFrame.setVisible(true);
-	}
-	
 	
 	/**
 	 * Waits and responds to events in mainFrame through lambda expressions.
@@ -115,11 +116,10 @@ public class GUIController {
 			initMoviesFrame();
 		});
 		
-//		mainFrame.getCancelTicketButton().addActionListener((ActionEvent e) ->{
-//			mainFrame.dispose();
-//			
-//			initCancelTicketFrame();
-//		});
+		mainFrame.getLoginButton().addActionListener((ActionEvent e) ->{
+			mainFrame.dispose();
+			initLoginFrame();
+		});
 	}
 
 	private void seatsFrameEventHandler(Movie selectedMovie, String selectedShowtime) {
@@ -133,17 +133,46 @@ public class GUIController {
 		});	
 	}
 	
-	// TODO the following event handlers
 	private void loginEventHandler() {
 		loginWindow.getLoginButton().addActionListener((ActionEvent e) ->{
-				
+			String email = loginWindow.getEmail();
+			String password = loginWindow.getPassword();
+			boolean verified = false;
+			
+			for (Account a: accounts) {
+				if (a.verifyAccount(email, password)) {
+					verified = true;
+					user = new RegisteredUser(a.getEmail(), a);
+					loginWindow.dispose();
+					initMoviesFrame();
+				}
+			}
+			
+			if (!verified) loginWindow.displayErrorMessage("Incorrect credentials!");
 		});	
 		
 		loginWindow.getRegisterButton().addActionListener((ActionEvent e) ->{
-			
+			initRegisterFrame();
 		});
 	}
+	
+	private void registerWindowEventHandler() {
+		registerWindow.getRegisterButton().addActionListener((ActionEvent e) ->{
+			String email = registerWindow.getEmail();
+			String password = registerWindow.getPassword();
+			String bank = registerWindow.getBank();
+			String card = registerWindow.getCard();
+			
+			Account newAccount = new Account(email, password, card, bank);
+			accounts.add(newAccount);
+			addAccount(newAccount);
+			user = new RegisteredUser(email, newAccount);
+			
+			registerWindow.dispose();
+		});	
+	}
 
+	// TODO the following event handlers
 	private void checkoutFrameEventHandler() {
 		checkoutFrame.getLogin().addActionListener((ActionEvent e) ->{
 			initLoginFrame();			
@@ -152,6 +181,15 @@ public class GUIController {
 	}
 	
 	private void cancelTicketEventHandler() {
+		
+	}
+	
+	private void addAccount(Account newAccount) {
+		try {
+			database.addAccountToDB(newAccount);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 		
 	}
 }

@@ -14,6 +14,10 @@ public class Account {
 	public boolean verifyPassword(String p){
 		return (p.equals(password));
 	}
+	
+	public boolean verifyAccount(String e, String p){
+		return (e.equalsIgnoreCase(email) && p.equals(password));
+	}
 
 	public FinancialInstitution getFI() {return bank;}
 	
