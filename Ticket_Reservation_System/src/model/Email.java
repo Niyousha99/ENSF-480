@@ -13,10 +13,8 @@ public abstract class Email {
 	
 	@Override
 	public String toString() {
-		String str = "";
-		
-		
-		
+		String str = "From: Group 21 Ticket Reservation App\n";
+		str += "To: " + address + "\n";
 		return str;
 	}
 

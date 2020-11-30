@@ -9,10 +9,11 @@ public class ConfirmationEmail extends Email{
 	
 	@Override
 	public String toString() {
-		String str = "";
-		
-		
-		
+		String str = super.toString();
+		str = "Subject: Booking Confirmation\n\n";
+		str += "Congratulations, your reservation is confirmed!";
+		str += "Please find below your tickets and receipt.\n\n";
+		str += confirmationReceipt;
 		return str;
 	}
 
