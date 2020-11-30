@@ -1,12 +1,14 @@
 package model;
 
 public class Account {
+	private String email;
 	private String password;
 	private String cardNumber;
 	private FinancialInstitution bank;
 	
 	
-	public Account(String pass, String cardNo, String fi) {
+	public Account(String mail, String pass, String cardNo, String fi) {
+		email = mail;
 		password = pass;
 		cardNumber = cardNo;
 		bank = new FinancialInstitution(fi);
@@ -22,5 +24,9 @@ public class Account {
 
 	public FinancialInstitution getFI() {
 		return bank;
+	}
+	
+	public String getEmail() {
+		return email;
 	}
 }

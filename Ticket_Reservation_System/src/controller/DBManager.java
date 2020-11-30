@@ -85,11 +85,10 @@ public class DBManager {
 			String password = accountResults.getString("password");
 			String cardNumber = accountResults.getString("creditCard");
 			String bank = accountResults.getString("bankName");
-			String email = accountResults.getString("email"); // maybe add to Account class
-			Account newAccount = new Account(password, cardNumber, bank);
+			String email = accountResults.getString("email");
+			Account newAccount = new Account(email, password, cardNumber, bank);
 			accounts.add(newAccount);
 		}
-		//System.out.println("yes we are goood to go");
 	}
 	
 	public void addAccountToDB(Account account, Connection dbConnection) throws SQLException {

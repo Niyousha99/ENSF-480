@@ -32,10 +32,11 @@ public class CheckoutGUI extends JFrame{
 	
 	public CheckoutGUI(Movie selectedMovie, String selectedShowtime, ArrayList<Seat> selectedSeats) {
 		super("Checkout");
-		setBounds(700, 300, 600, 600);
+		setBounds(700, 250, 600, 600);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setLayout(new GridLayout());
 		
+
 		JPanel panel = new JPanel();
 		panel.setBackground(Color.GRAY);
 		add(panel);

@@ -9,10 +9,6 @@ import view.*;
 
 public class MasterController implements Constants{
 	
-	public void populateModel() {
-		
-	}
-	
 	public static void main (String args[]) throws SQLException {
 		// instantiate DBManager and get all required data from DB
 		// to communicate between other controllers, models, views

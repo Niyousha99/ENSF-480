@@ -3,9 +3,8 @@ package model;
 public class ConfirmationEmail extends Email{
 	private Receipt confirmationReceipt;
 	
-	public ConfirmationEmail(String userAddress) {
-		super(userAddress);
-		
+	public ConfirmationEmail(String userAddress, Reservation r) {
+		super(userAddress, r);
 	}
 	
 	@Override
@@ -16,5 +15,9 @@ public class ConfirmationEmail extends Email{
 		
 		return str;
 	}
+
+	public Receipt getConfirmationReceipt() {return confirmationReceipt;}
+
+	public void setConfirmationReceipt(Receipt confirmationReceipt) {this.confirmationReceipt = confirmationReceipt;}
 	
 }
