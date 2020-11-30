@@ -143,6 +143,9 @@ public class GUIController {
 	}
 
 	private void checkoutFrameEventHandler() {
+		checkoutFrame.getLogin().addActionListener((ActionEvent e) ->{
+			initLoginFrame();			
+		});	
 		
 	}
 	

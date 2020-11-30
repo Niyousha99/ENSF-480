@@ -30,7 +30,7 @@ public class Showtime implements Constants {
 		// How text will be presented in the "View Showtimes" menu
 		@Override
 		public String toString() {
-			String str = date + " " + time;
+			String str = date + ", " + time;
 			return str;
 		}
 
