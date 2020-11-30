@@ -18,15 +18,16 @@ public class Receipt {
 	
 	@Override
 	public String toString() {
-		String str = reservation.toString();
+		// TODO fix text alignment
+		String str = "";
 		str += "Receipt:\n";
 		str += "General Ticket";
 		if (reservation.getTickets().size() > 1)
 			str += "s";
 		str += "	" + reservation.getTickets().size() + " x $" + reservation.getTickets().get(0).getPrice();
 		str += " = $" + reservation.getTickets().get(0).getPrice() * reservation.getTickets().size();
-		str += "\nTax               $" + Double.valueOf(reservation.getTickets().get(0).getPrice() * reservation.getTickets().size()) / 20;
-		str += "\n                  ----------------------------------";
+		str += "\nTax               	   $" + Double.valueOf(reservation.getTickets().get(0).getPrice() * reservation.getTickets().size()) / 20;
+		str += "\n----------------------------------";
 		str += "Total               $" + Double.valueOf(reservation.getTickets().get(0).getPrice() * reservation.getTickets().size()) / 20
 									   + reservation.getTickets().get(0).getPrice() * reservation.getTickets().size();
 		return str;

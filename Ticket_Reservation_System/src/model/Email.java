@@ -15,8 +15,8 @@ public abstract class Email {
 	
 	@Override
 	public String toString() {
-		String str = "From: Group 21 Ticket Reservation App\n";
-		str += "To: " + address + "\n";
+		String str = "To: " + address + "\n";
+		str += "From: Your Local Ticket Reservation Application\n\n";
 		return str;
 	}
 

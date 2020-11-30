@@ -4,12 +4,13 @@ public class Ticket {
 	private Movie movie;
 	private Seat seat;
 	private Account account;
-	private int price;
+	private double price;
 	
 	public Ticket(Movie m, Seat s, Account a) {
 		setMovie(m);
 		setSeat(s);
 		setAccount(a);
+		price = 12.50;
 	}
 
 	public Seat getSeat() {
@@ -28,7 +29,7 @@ public class Ticket {
 	
 	public void setPrice(int p) {price = p;}
 	
-	public int getPrice() {return price;}
+	public double getPrice() {return price;}
 	
 	@Override
 	public String toString() {
