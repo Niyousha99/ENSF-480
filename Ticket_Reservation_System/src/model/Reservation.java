@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 public class Reservation {
 	private ArrayList<Ticket> tickets;
-	private Payment paymentInfo;
 	private int userType; // 1 = registered, 0 = ordinary?
 
 	public Reservation(int uType) {
@@ -28,6 +27,8 @@ public class Reservation {
 		
 		return null;
 	}
+	
+	public ArrayList<Ticket> getTickets(){return tickets;}
 	
 	// Returns all tickets as a string
 	@Override

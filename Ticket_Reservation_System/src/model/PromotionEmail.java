@@ -1,10 +1,10 @@
 package model;
 
-public class PromotionEmail extends Email{
+// TODO figure out 
+public class PromotionEmail{
 	private MovieNews moviePromos;
 	
 	public PromotionEmail(String userAddress, MovieNews promos) {
-		super(userAddress);
 		moviePromos = promos;
 	}
 	

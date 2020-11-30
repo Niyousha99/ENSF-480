@@ -90,7 +90,7 @@ public class GUIController {
 	
 	// TODO create email GUI
 	private void initEmailFrame() {
-		
+		// create Email object and pass to EmailGUI
 	}
 	
 	/**
@@ -115,11 +115,11 @@ public class GUIController {
 			initMoviesFrame();
 		});
 		
-		mainFrame.getCancelTicketButton().addActionListener((ActionEvent e) ->{
-			mainFrame.dispose();
-			
-			initCancelTicketFrame();
-		});
+//		mainFrame.getCancelTicketButton().addActionListener((ActionEvent e) ->{
+//			mainFrame.dispose();
+//			
+//			initCancelTicketFrame();
+//		});
 	}
 
 	private void seatsFrameEventHandler(Movie selectedMovie, String selectedShowtime) {

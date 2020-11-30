@@ -48,11 +48,11 @@ public class MainGUI extends JFrame implements DocumentListener{
 		browseMovies.setPreferredSize(new Dimension(50, 50));
 		background.add(browseMovies);
 		
-		background.add(Box.createRigidArea(new Dimension(50, 20)));
-		
-		cancelTicket = new Button("Cancel Ticket");
-		cancelTicket.setPreferredSize(new Dimension(50, 50));
-		background.add(cancelTicket);
+//		background.add(Box.createRigidArea(new Dimension(50, 20)));
+//		
+//		cancelTicket = new Button("Cancel Ticket");
+//		cancelTicket.setPreferredSize(new Dimension(50, 50));
+//		background.add(cancelTicket);
 
 		add(background);
 		pack();
