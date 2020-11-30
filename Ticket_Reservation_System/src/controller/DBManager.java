@@ -94,7 +94,7 @@ public class DBManager {
 	public void addAccountToDB(Account account, Connection dbConnection) throws SQLException {
 		Statement dbStatement = dbConnection.createStatement();
 		dbStatement.executeUpdate("INSERT INTO theater.account_list" +
-				"VALUES ('" + account.getCardNumber() + "', '" + account.getFI().getBankName() + "')");// TODO add remainder of attributes
+				"VALUES ('" + account.getFI().getCardNumber() + "', '" + account.getFI().getBankName() + "')");// TODO add remainder of attributes
 	}
 
 	public ArrayList<Movie> getMovies() {

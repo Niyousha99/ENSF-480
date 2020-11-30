@@ -136,7 +136,7 @@ public class GUIController {
 	// TODO the following event handlers
 	private void loginEventHandler() {
 		loginWindow.getLoginButton().addActionListener((ActionEvent e) ->{
-					
+				
 		});	
 		
 		loginWindow.getRegisterButton().addActionListener((ActionEvent e) ->{

@@ -2,19 +2,34 @@ package model;
 
 public class FinancialInstitution {
 	private String bankName;
-	// TODO Think of other attributes and operations for bank
-	// perhaps credit card balance to show effects of purchases and refunds?
-	public FinancialInstitution(String name) {
+	private String cardNumber;
+	private double balance;
+	
+	public FinancialInstitution(String name, String cardNum) {
 		setBankName(name);
+		setCardNumber(cardNum);
+		setBalance(1000);
 	}
 	
-	public String getBankName() {
-		return bankName;
+	public void deposit(double amount) {balance += amount;}
+	
+	public boolean withdraw(double amount) {
+		double remainingBalance = balance - amount;
+		if (remainingBalance < 0) return false;
+		
+		balance = remainingBalance;
+		return true;
 	}
 	
-	public void setBankName(String bankName) {
-		this.bankName = bankName;
-	}
+	public String getBankName() {return bankName;}
 	
+	public void setBankName(String bankName) {this.bankName = bankName;}
 
+	public double getBalance() {return balance;}
+
+	public void setBalance(double balance) {this.balance = balance;}
+
+	public String getCardNumber() {return cardNumber;}
+
+	public void setCardNumber(String cardNumber) {this.cardNumber = cardNumber;}
 }

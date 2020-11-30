@@ -26,16 +26,11 @@ public class CheckoutGUI extends JFrame{
 	private JTextField bankName;
 	private Button login;
 
-
-
-
-	
 	public CheckoutGUI(Movie selectedMovie, String selectedShowtime, ArrayList<Seat> selectedSeats) {
 		super("Checkout");
 		setBounds(700, 250, 600, 600);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setLayout(new GridLayout());
-		
 
 		JPanel panel = new JPanel();
 		panel.setBackground(Color.GRAY);
@@ -85,7 +80,6 @@ public class CheckoutGUI extends JFrame{
 		      public void keyReleased(KeyEvent e) {
 		        JTextField textField = (JTextField) e.getSource();
 		        String text = textField.getText();
-		        System.out.println(text);
 		      }
 
 		      public void keyTyped(KeyEvent e) {
@@ -99,18 +93,6 @@ public class CheckoutGUI extends JFrame{
 		login = new Button("login");
 		login.setBounds(10, 350, 80, 25);
 		panel.add(login);
-		
-//		login.addActionListener(new ActionListener() {
-//            public void actionPerformed(ActionEvent e) {
-//                // Insert code here
-//		        System.out.println("hello");
-//            	LoginGUI loginGui = new LoginGUI();
-//
-//            }
-//        });
-
-
-		// TODO create rest of checkout GUI
 		
 	}
 	
