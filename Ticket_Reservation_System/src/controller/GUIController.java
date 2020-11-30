@@ -68,11 +68,16 @@ public class GUIController {
 		moviesFrameEventHandler();	
 	}
 	
-	// TODO create email GUI
-	private void initEmailFrame() {
-		// create Email object and pass to EmailGUI
+	private void initConfirmationEmailFrame(Reservation r) {
+		// TODO create Email object and pass to EmailGUI
+		ConfirmationEmail email = new ConfirmationEmail(user.getEmail(), r);
+		emailFrame = new EmailGUI(email);
+		emailFrame.setVisible(true);
+		confirmationEmailEventHandler();
 	}
 	
+	
+
 	private void moviesFrameEventHandler() {
 		int i = 0;
 		for (JComboBox<String> cb: moviesFrame.getShowtimeMenus()) {
@@ -101,8 +106,7 @@ public class GUIController {
 		seatsFrame.setVisible(true);
 		seatsFrameEventHandler(selectedMovie, selectedShowtime);
 	}
-	
-	// TODO create checkout GUI
+
 	private void initCheckoutFrame(Movie selectedMovie, String selectedShowtime, ArrayList<Seat> selectedSeats) {
 		checkoutFrame = new CheckoutGUI(selectedMovie, selectedShowtime, selectedSeats);
 		checkoutFrame.setVisible(true);
@@ -173,12 +177,26 @@ public class GUIController {
 			registerWindow.dispose();
 		});	
 	}
-
-	// TODO the following event handlers
+	
 	private void checkoutFrameEventHandler() {
-		checkoutFrame.getLogin().addActionListener((ActionEvent e) ->{
-			initLoginFrame();		
+		checkoutFrame.getConfirmButton().addActionListener((ActionEvent e) ->{
+			// Create reservation for user
+			int userType = 0;
+			if (user instanceof RegisteredUser)	userType = 1;
+			Reservation reservation = new Reservation(userType);
+			
+			// TODO add ticket(s) to reservation
+			
+			
+			checkoutFrame.displayMessage("Payment confirmed!");
+			checkoutFrame.dispose();
+			initConfirmationEmailFrame(reservation);
 		});	
+		
+	}
+	
+	private void confirmationEmailEventHandler() {
+		// TODO Auto-generated method stub
 		
 	}
 	

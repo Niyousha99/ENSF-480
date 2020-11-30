@@ -20,20 +20,23 @@ import java.awt.event.KeyEvent;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+// TODO fix to automatically fill in registered user info and show Movie Poster
+
 public class CheckoutGUI extends JFrame{
 	
 	private JTextField creditCardNumberText;
 	private JTextField bankName;
-	private Button login;
+	private Button confirm;
 
 	public CheckoutGUI(Movie selectedMovie, String selectedShowtime, ArrayList<Seat> selectedSeats) {
 		super("Checkout");
 		setBounds(700, 250, 600, 600);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setLayout(new GridLayout());
+		setLayout(new GridLayout(0, 2));
+		setBackground(Color.LIGHT_GRAY);
 
 		JPanel panel = new JPanel();
-		panel.setBackground(Color.GRAY);
+		panel.setBackground(Color.LIGHT_GRAY);
 		add(panel);
 		panel.setLayout(null);
 		
@@ -77,22 +80,20 @@ public class CheckoutGUI extends JFrame{
 		panel.add(bankName);
 		
 		creditCardNumberText.addKeyListener(new KeyAdapter() {
-		      public void keyReleased(KeyEvent e) {
+			public void keyReleased(KeyEvent e) {
 		        JTextField textField = (JTextField) e.getSource();
 		        String text = textField.getText();
-		      }
+		    }
 
-		      public void keyTyped(KeyEvent e) {
-		      }
+			public void keyTyped(KeyEvent e) {}
 
-		      public void keyPressed(KeyEvent e) {
-		      }
-		    });
+		    public void keyPressed(KeyEvent e) {}     
+		});
 		
 
-		login = new Button("login");
-		login.setBounds(10, 350, 80, 25);
-		panel.add(login);
+		confirm = new Button("confirm");
+		confirm.setBounds(10, 350, 80, 25);
+		panel.add(confirm);
 		
 	}
 	
@@ -103,7 +104,6 @@ public class CheckoutGUI extends JFrame{
 			str+= " ";
 		}
 		return str;
-		
 	}
 	
 	
@@ -115,7 +115,5 @@ public class CheckoutGUI extends JFrame{
 		JOptionPane.showMessageDialog(this, message);
 	}
 	
-	public JButton getLogin() {
-		return login;
-	}
+	public JButton getConfirmButton() {return confirm;}
 }

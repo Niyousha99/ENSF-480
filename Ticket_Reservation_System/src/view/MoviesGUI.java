@@ -32,6 +32,7 @@ public class MoviesGUI extends JFrame{
 		setBackground(Color.BLACK);
 		setLayout(new BorderLayout());
 		setResizable(false);
+	
 		
 		movies = m;
 		bookSeats = new ArrayList<BookSeatsButton>(movies.size()); 
@@ -94,6 +95,12 @@ public class MoviesGUI extends JFrame{
 		add(panel, BorderLayout.CENTER);
 		JScrollPane scrollPanel = new JScrollPane(panel, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 		scrollPanel.getVerticalScrollBar().setUnitIncrement(10);
+		javax.swing.SwingUtilities.invokeLater(new Runnable() {
+			   public void run() { 
+			       scrollPanel.getVerticalScrollBar().setValue(0);
+			   }
+			});
+		
 		add(scrollPanel, BorderLayout.CENTER);
 	}
 	

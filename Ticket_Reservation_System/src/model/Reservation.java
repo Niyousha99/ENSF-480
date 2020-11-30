@@ -9,13 +9,13 @@ public class Reservation {
 
 	public Reservation(int uType) {
 		tickets = new ArrayList<Ticket>();
-		userType = uType;
+		setUserType(uType);
 	}
 	
 	// For reserving tickets
 	public void addTicket(Ticket ticket) {
 		tickets.add(ticket);
-		reservationTotal += ticket.getPrice();
+		setReservationTotal(getReservationTotal() + ticket.getPrice());
 	}
 	
 	// For canceling tickets
@@ -32,6 +32,14 @@ public class Reservation {
 	
 	public ArrayList<Ticket> getTickets(){return tickets;}
 	
+	public double getReservationTotal() {return reservationTotal;}
+
+	public void setReservationTotal(double reservationTotal) {this.reservationTotal = reservationTotal;}
+
+	public int getUserType() {return userType;}
+
+	public void setUserType(int userType) {this.userType = userType;}
+	
 	// Returns all tickets as a string
 	@Override
 	public String toString() {
@@ -42,5 +50,4 @@ public class Reservation {
 		}
 		return str;
 	}
-	
 }
