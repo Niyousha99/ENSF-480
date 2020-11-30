@@ -17,11 +17,11 @@ import javax.swing.event.DocumentListener;
 /**
  * Provides data fields and methods to create a Java data-type, representing a GUI main frame in a Movie Theater Ticket Reservation System.
  */
-public class MainGUI extends JFrame implements DocumentListener{
+public class MainGUI extends JFrame{
 	/**
 	 * Components of the frame
 	 */
-	private JButton browseMovies, cancelTicket;
+	private JButton browseMovies, login;
 	
 	/**
 	 * Constructs a MainFrame object
@@ -38,38 +38,28 @@ public class MainGUI extends JFrame implements DocumentListener{
 		
 		background.add(Box.createRigidArea(new Dimension(0, 300)));
 		JLabel welcomeText = new JLabel("Welcome to your local Ticket Reservation System!");
-		welcomeText.setFont(new Font("Segoe UI", Font.PLAIN, 30));
+		welcomeText.setFont(new Font("Segoe UI", Font.BOLD, 30));
 		welcomeText.setForeground(Color.WHITE);
 		background.add(welcomeText);
 		
 		background.add(Box.createRigidArea(new Dimension(50, 50)));
-
-		browseMovies = new Button("Browse Movies");
+		
+		login = new Button("login");
+		login.setPreferredSize(new Dimension(50, 50));
+		background.add(login);
+		
+		background.add(Box.createRigidArea(new Dimension(50, 20)));
+		
+		browseMovies = new Button("browse as guest");
 		browseMovies.setPreferredSize(new Dimension(50, 50));
 		background.add(browseMovies);
 		
-//		background.add(Box.createRigidArea(new Dimension(50, 20)));
-//		
-//		cancelTicket = new Button("Cancel Ticket");
-//		cancelTicket.setPreferredSize(new Dimension(50, 50));
-//		background.add(cancelTicket);
-
 		add(background);
 		pack();
 	}
 	
-	public JButton getBrowseMoviesButton() {
-		return browseMovies;
-	}
+	public JButton getBrowseMoviesButton() {return browseMovies;}
 	
-	public JButton getCancelTicketButton() {
-		return cancelTicket;
-	}
+	public JButton getLoginButton() {return login;}
 
-	@Override
-	public void insertUpdate(DocumentEvent e) {}
-	@Override
-	public void removeUpdate(DocumentEvent e) {}
-	@Override
-	public void changedUpdate(DocumentEvent e) {}
 }

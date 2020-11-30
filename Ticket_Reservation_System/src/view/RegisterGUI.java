@@ -12,22 +12,22 @@ import javax.swing.JTextField;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
-public class LoginGUI extends JFrame implements DocumentListener{
+public class RegisterGUI extends JFrame implements DocumentListener{
 	/**
 	 * Components of the frame
 	 */
-	private JTextField userText, bankText;
+	private JTextField userText, bankText, cardText;
 	private JPasswordField passwordText;
-	private Button login, register;
+	private Button register;
 	
 	/**
 	 * Constructs a StudentLoginFrame object
 	 */
-	public LoginGUI() {
+	public RegisterGUI() {
 		
 		// Login Frame
-		super("Login");
-		setBounds(800, 450, 300, 150);
+		super("Register Account");
+		setBounds(800, 450, 300, 250);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		JPanel panel = new JPanel();
@@ -52,18 +52,32 @@ public class LoginGUI extends JFrame implements DocumentListener{
 		passwordText.setBounds(100, 40, 160, 25);
 		passwordText.getDocument().addDocumentListener(this);
 		panel.add(passwordText);
-
-		login = new Button("login");
-		login.setBounds(10, 80, 80, 25);
-		login.setForeground(Color.BLACK);
-		login.setEnabled(false);
-		panel.add(login);
+		
+		JLabel bankLabel = new JLabel("Bank");
+		bankLabel.setBounds(10, 70, 80, 25);
+		panel.add(bankLabel);
+		
+		bankText = new JTextField();
+		bankText.setBounds(100, 70, 160, 25);
+		bankText.getDocument().addDocumentListener(this);
+		panel.add(bankText);
+		
+		JLabel cardLabel = new JLabel("Credit Card");
+		cardLabel.setBounds(10, 100, 80, 25);
+		panel.add(cardLabel);
+		
+		cardText = new JTextField();
+		cardText.setBounds(100, 100, 160, 25);
+		cardText.getDocument().addDocumentListener(this);
+		panel.add(cardText);
 		
 		register = new Button("register");
-		register.setBounds(180, 80, 80, 25);
+		register.setEnabled(false);
+		register.setBounds(10, 150, 80, 25);
 		register.setForeground(Color.BLACK);
 		panel.add(register);
 	}
+	
 	
 	/**
 	 * Displays message supplied by the given parameter in a dialog box
@@ -78,7 +92,8 @@ public class LoginGUI extends JFrame implements DocumentListener{
 	 * @return false if one of the text fields is empty. Otherwise returns true.
 	 */
 	private boolean credentialsEntered() {
-		if (userText.getText().trim().length() == 0 || passwordText.getText().trim().length() == 0)
+		if (userText.getText().trim().length() == 0 || passwordText.getText().trim().length() == 0 ||
+				bankText.getText().trim().length() == 0 || cardText.getText().trim().length() == 0)
 			return false;
 		
 		return true;
@@ -89,7 +104,7 @@ public class LoginGUI extends JFrame implements DocumentListener{
 	 * called method credentialsIsEntered.
 	 */
 	private void checkCredentials() {
-		login.setEnabled(credentialsEntered());
+		register.setEnabled(credentialsEntered());
 	}
 	
 	@Override
@@ -101,13 +116,13 @@ public class LoginGUI extends JFrame implements DocumentListener{
 	@Override
 	public void changedUpdate(DocumentEvent e) {}
 	
-	public JButton getLoginButton() {return login;}
-	
 	public JButton getRegisterButton() {return register;}
 	
 	public String getEmail() {return userText.getText();}
 	
 	public String getBank() {return bankText.getText();}
+	
+	public String getCard() {return cardText.getText();}
 	
 	public String getPassword() {return passwordText.getText();}
 

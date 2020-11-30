@@ -2,21 +2,12 @@ package model;
 
 public class Receipt {
 	private Reservation reservation;
-	private Payment paymentInfo;
 	
-	public Receipt(Reservation r, Payment p) {
+	
+	public Receipt(Reservation r) {
 		setReservation(r);
-		setPaymentInfo(p);
 	}
 	
-	public Payment getPaymentInfo() {
-		return paymentInfo;
-	}
-
-	public void setPaymentInfo(Payment paymentInfo) {
-		this.paymentInfo = paymentInfo;
-	}
-
 	public Reservation getReservation() {
 		return reservation;
 	}
@@ -27,10 +18,17 @@ public class Receipt {
 	
 	@Override
 	public String toString() {
-		String str = "";
-		
-		
-		
+		String str = reservation.toString();
+		str += "Receipt:\n";
+		str += "General Ticket";
+		if (reservation.getTickets().size() > 1)
+			str += "s";
+		str += "	" + reservation.getTickets().size() + " x $" + reservation.getTickets().get(0).getPrice();
+		str += " = $" + reservation.getTickets().get(0).getPrice() * reservation.getTickets().size();
+		str += "\nTax               $" + Double.valueOf(reservation.getTickets().get(0).getPrice() * reservation.getTickets().size()) / 20;
+		str += "\n                  ----------------------------------";
+		str += "Total               $" + Double.valueOf(reservation.getTickets().get(0).getPrice() * reservation.getTickets().size()) / 20
+									   + reservation.getTickets().get(0).getPrice() * reservation.getTickets().size();
 		return str;
 	}
 }

@@ -124,6 +124,7 @@ public class SeatsGUI extends JFrame implements Constants{
 				col.getSeat().setSelected(false);
 				col.setIcon(new ImageIcon("src/img/available_seat.jpg"));
 			}
+			selectedSeats.clear();
 		}
 		reserve.setEnabled(false);
 	}

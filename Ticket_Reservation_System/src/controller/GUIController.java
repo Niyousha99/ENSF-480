@@ -3,40 +3,51 @@ import view.*;
 import model.*;
 
 import java.awt.event.ActionEvent;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 public class GUIController {
+	private DBManager database;
 	private ArrayList<Movie> movies;
 	private ArrayList<Account> accounts;
+	private User user;
 	
 	private MainGUI mainFrame;
 	private LoginGUI loginWindow;
+	private RegisterGUI registerWindow;
 	private MoviesGUI moviesFrame;
 	private SeatsGUI seatsFrame;
 	private CheckoutGUI checkoutFrame;
 	private CancelTicketGUI cancelTicketFrame;
 	private EmailGUI emailFrame;
 	
-	public GUIController(ArrayList<Movie> m, ArrayList<Account> a) {
-		movies = m;
-		accounts = a;
+	public GUIController(DBManager db) {
+		database = db;
+		populateData();
 		initMainFrame();
 	}
 	
+	private void populateData() {
+		movies = database.getMovies();
+		accounts = database.getAccounts();
+	}
+
 	private void initMainFrame() {
 		mainFrame = new MainGUI();
 		mainFrame.setVisible(true);
 		mainFrameEventHandler();
 	}
 	
-	// TODO create CancelTicket GUI
-	private void initCancelTicketFrame() {
-		
-		
+
+	public void initCancelTicketFrame() {
+		cancelTicketFrame = new CancelTicketGUI();
+		cancelTicketFrame.setVisible(true);
+		cancelTicketEventHandler();
 	}
 
 	private void initLoginFrame() {
@@ -45,12 +56,29 @@ public class GUIController {
 		loginEventHandler();
 	}
 	
+	private void initRegisterFrame() {
+		registerWindow = new RegisterGUI();
+		registerWindow.setVisible(true);
+		registerWindowEventHandler();
+	}
+
 	private void initMoviesFrame() {
 		moviesFrame = new MoviesGUI(movies);
 		moviesFrame.setVisible(true);
 		moviesFrameEventHandler();	
 	}
 	
+	private void initConfirmationEmailFrame(Reservation r) {
+		// TODO create Email object and pass to EmailGUI
+		Receipt tempReceipt = new Receipt(r);
+		ConfirmationEmail email = new ConfirmationEmail(user.getEmail(), r, tempReceipt);
+		emailFrame = new EmailGUI(email);
+		emailFrame.setVisible(true);
+		confirmationEmailEventHandler();
+	}
+	
+	
+
 	private void moviesFrameEventHandler() {
 		int i = 0;
 		for (JComboBox<String> cb: moviesFrame.getShowtimeMenus()) {
@@ -79,32 +107,12 @@ public class GUIController {
 		seatsFrame.setVisible(true);
 		seatsFrameEventHandler(selectedMovie, selectedShowtime);
 	}
-	
-	// TODO create checkout GUI
+
 	private void initCheckoutFrame(Movie selectedMovie, String selectedShowtime, ArrayList<Seat> selectedSeats) {
 		checkoutFrame = new CheckoutGUI(selectedMovie, selectedShowtime, selectedSeats);
 		checkoutFrame.setVisible(true);
-		checkoutFrameEventHandler();
-		
+		checkoutFrameEventHandler(selectedMovie, selectedShowtime, selectedSeats );
 	}
-	
-	// TODO create email GUI
-	private void initEmailFrame() {
-		// create Email object and pass to EmailGUI
-	}
-	
-	/**
-	 * Switches back to the desired frame supplied by the first parameter by disposing the frame supplied by the second parameter 
-	 * and setting the desired frame to visible.
-	 * 
-	 * @param desiredFrame is the frame to be displayed
-	 * @param disposeFrame is the frame to be disposed
-	 */
-	private void switchFrame(JFrame desiredFrame, JFrame disposeFrame) {
-		disposeFrame.dispose();
-		desiredFrame.setVisible(true);
-	}
-	
 	
 	/**
 	 * Waits and responds to events in mainFrame through lambda expressions.
@@ -115,11 +123,10 @@ public class GUIController {
 			initMoviesFrame();
 		});
 		
-//		mainFrame.getCancelTicketButton().addActionListener((ActionEvent e) ->{
-//			mainFrame.dispose();
-//			
-//			initCancelTicketFrame();
-//		});
+		mainFrame.getLoginButton().addActionListener((ActionEvent e) ->{
+			mainFrame.dispose();
+			initLoginFrame();
+		});
 	}
 
 	private void seatsFrameEventHandler(Movie selectedMovie, String selectedShowtime) {
@@ -133,25 +140,100 @@ public class GUIController {
 		});	
 	}
 	
-	// TODO the following event handlers
 	private void loginEventHandler() {
 		loginWindow.getLoginButton().addActionListener((ActionEvent e) ->{
-					
+			String email = loginWindow.getEmail();
+			String password = loginWindow.getPassword();
+			boolean verified = false;
+			
+			for (Account a: accounts) {
+				if (a.verifyAccount(email, password)) {
+					verified = true;
+					user = new RegisteredUser(a.getEmail(), a);
+					loginWindow.dispose();
+					initMoviesFrame();
+				}
+			}
+			
+			if (!verified) loginWindow.displayErrorMessage("Incorrect credentials!");
 		});	
 		
 		loginWindow.getRegisterButton().addActionListener((ActionEvent e) ->{
-			
+			initRegisterFrame();
 		});
 	}
-
-	private void checkoutFrameEventHandler() {
-		checkoutFrame.getLogin().addActionListener((ActionEvent e) ->{
-			initLoginFrame();			
+	
+	private void registerWindowEventHandler() {
+		registerWindow.getRegisterButton().addActionListener((ActionEvent e) ->{
+			String email = registerWindow.getEmail();
+			String password = registerWindow.getPassword();
+			String bank = registerWindow.getBank();
+			String card = registerWindow.getCard();
+			
+			Account newAccount = new Account(email, password, card, bank);
+			accounts.add(newAccount);
+			addAccount(newAccount);
+			user = new RegisteredUser(email, newAccount);
+			
+			registerWindow.dispose();
+		});	
+	}
+	
+	private void checkoutFrameEventHandler(Movie m, String showtime, ArrayList<Seat> theSeats) {
+		checkoutFrame.getConfirmButton().addActionListener((ActionEvent e) ->{
+			// Create reservation for user
+			int userType = 0;
+			if (user instanceof RegisteredUser)	userType = 1;
+			Reservation reservation = new Reservation(userType);
+			
+			
+			// TODO add ticket(s) to reservation
+			
+			for (int i =0; i< theSeats.size(); i++) {
+				Ticket newTick = new Ticket(m, theSeats.get(i), findAccount(user.getEmail()));
+				reservation.addTicket(newTick);
+			}
+			
+			
+			checkoutFrame.displayMessage("Payment confirmed!");
+			checkoutFrame.dispose();
+			System.out.println(reservation.getUserType());
+			System.out.println(reservation.toString());
+			initConfirmationEmailFrame(reservation);
 		});	
 		
 	}
 	
+	public Account findAccount(String email) {
+		for(int i =0; i< accounts.size(); i++) {
+			if(accounts.get(i).getEmail().equals(email)) {
+				return accounts.get(i);
+			}
+		}
+		return null;
+	}
+	
+	// TODO add event handlers for EmailGUI
+	private void confirmationEmailEventHandler() {
+		
+		
+	}
+	
 	private void cancelTicketEventHandler() {
+		cancelTicketFrame.getConfirmCancelButton().addActionListener((ActionEvent e) ->{
+			cancelTicketFrame.dispose();
+			// TODO Carry out cancellation logic here. (refund account, remove reservation)
+			JOptionPane.showMessageDialog(null, "Cancellation completed.");
+			initMainFrame();
+		});
+	}
+	
+	private void addAccount(Account newAccount) {
+		try {
+			database.addAccountToDB(newAccount);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 		
 	}
 }

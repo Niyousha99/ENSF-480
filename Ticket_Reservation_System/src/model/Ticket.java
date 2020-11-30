@@ -4,6 +4,7 @@ public class Ticket {
 	private Movie movie;
 	private Seat seat;
 	private Account account;
+	private int price;
 	
 	public Ticket(Movie m, Seat s, Account a) {
 		setMovie(m);
@@ -25,9 +26,14 @@ public class Ticket {
 
 	public void setAccount(Account account) {this.account = account;}
 	
+	public void setPrice(int p) {price = p;}
+	
+	public int getPrice() {return price;}
+	
 	@Override
 	public String toString() {
 		String str = "";
+		str += seat.toString();
 		
 		
 		

@@ -6,17 +6,17 @@ public abstract class Email {
 	private Reservation reservation;
 	private Receipt receipt;
 	
-	public Email(String userAddress, Reservation reservation) {
+	public Email(String userAddress, Reservation reservation, Receipt r) {
 		setAddress(userAddress);
 		setReservation(reservation);
+		setReceipt(r);
+		
 	}
 	
 	@Override
 	public String toString() {
-		String str = "";
-		
-		
-		
+		String str = "From: Group 21 Ticket Reservation App\n";
+		str += "To: " + address + "\n";
 		return str;
 	}
 

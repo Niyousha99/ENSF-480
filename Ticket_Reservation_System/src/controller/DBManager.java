@@ -18,7 +18,7 @@ import java.sql.*;
 public class DBManager {
 	private ArrayList<Movie> movies;
 	private ArrayList<Account> accounts;
-	
+	private Connection dbConnection;
 	
 	public DBManager() {
 		setMovies(new ArrayList<Movie>());
@@ -26,23 +26,23 @@ public class DBManager {
 	}
 	
 	public void connectToLoadDB(String url, String u, String p) throws SQLException {
-		Connection dbConnection = DriverManager.getConnection(url, u, p);
-		loadDB(dbConnection);
+		dbConnection = DriverManager.getConnection(url, u, p);
+		loadDB();
 		dbConnection.close();
 	}
 	
 	public void ConnectToAddAccountToDB(Account acc,String url, String u, String p) throws SQLException {
 		Connection dbConnection = DriverManager.getConnection(url, u, p);
-		addAccountToDB(acc, dbConnection);
+		addAccountToDB(acc);
 		dbConnection.close();
 	}
 	
-	private void loadDB(Connection dbConnection) throws SQLException {
-		loadMovies(dbConnection);
-		loadAccounts(dbConnection);
+	private void loadDB() throws SQLException {
+		loadMovies();
+		loadAccounts();
 	}
 	
-	private void loadMovies(Connection dbConnection) throws SQLException {
+	private void loadMovies() throws SQLException {
 		Statement dbStatement = dbConnection.createStatement();
 		ResultSet movieResults = dbStatement.executeQuery("SELECT * FROM ticket_reservation_backend.movies"); // TODO correct query
 		
@@ -50,12 +50,12 @@ public class DBManager {
 			String movieName = movieResults.getString("movie");
 			String movieDesc = movieResults.getString("description");
 			Movie newMovie = new Movie(movieName, movieDesc);
-			newMovie.setShowtimes(loadShowtimes(dbConnection, newMovie));
+			newMovie.setShowtimes(loadShowtimes(newMovie));
 			movies.add(newMovie);
 		}
 	}
 	
-	private ArrayList<Showtime> loadShowtimes(Connection dbConnection, Movie movie) throws SQLException {
+	private ArrayList<Showtime> loadShowtimes(Movie movie) throws SQLException {
 		ArrayList <Showtime> showtimes = new ArrayList<Showtime>();
 		Statement dbStatement = dbConnection.createStatement();
 		ResultSet showtimeResults = dbStatement.executeQuery("SELECT * FROM ticket_reservation_backend.showtimes WHERE movie = '" 
@@ -78,7 +78,7 @@ public class DBManager {
 		return showtimes;
 	}
 	
-	private void loadAccounts(Connection dbConnection) throws SQLException {
+	private void loadAccounts() throws SQLException {
 		Statement dbStatement = dbConnection.createStatement();
 		ResultSet accountResults = dbStatement.executeQuery("SELECT * FROM ticket_reservation_backend.registeredUsers");
 		while(accountResults.next()) {
@@ -91,10 +91,10 @@ public class DBManager {
 		}
 	}
 	
-	public void addAccountToDB(Account account, Connection dbConnection) throws SQLException {
+	public void addAccountToDB(Account account) throws SQLException {
 		Statement dbStatement = dbConnection.createStatement();
 		dbStatement.executeUpdate("INSERT INTO theater.account_list" +
-				"VALUES ('" + account.getCardNumber() + "', '" + account.getFI().getBankName() + "')");// TODO add remainder of attributes
+				"VALUES ('" + account.getFI().getCardNumber() + "', '" + account.getFI().getBankName() + "')");// TODO add remainder of attributes
 	}
 
 	public ArrayList<Movie> getMovies() {
