@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 public class GUIController {
 	private DBManager database;
@@ -42,10 +43,11 @@ public class GUIController {
 		mainFrameEventHandler();
 	}
 	
-	// TODO create CancelTicket GUI
-	private void initCancelTicketFrame() {
-		
-		
+
+	public void initCancelTicketFrame() {
+		cancelTicketFrame = new CancelTicketGUI();
+		cancelTicketFrame.setVisible(true);
+		cancelTicketEventHandler();
 	}
 
 	private void initLoginFrame() {
@@ -175,13 +177,18 @@ public class GUIController {
 	// TODO the following event handlers
 	private void checkoutFrameEventHandler() {
 		checkoutFrame.getLogin().addActionListener((ActionEvent e) ->{
-			initLoginFrame();			
+			initLoginFrame();		
 		});	
 		
 	}
 	
 	private void cancelTicketEventHandler() {
-		
+		cancelTicketFrame.getConfirmCancelButton().addActionListener((ActionEvent e) ->{
+			cancelTicketFrame.dispose();
+			// TODO Carry out cancellation logic here. (refund account, remove reservation)
+			JOptionPane.showMessageDialog(null, "Cancellation completed.");
+			initMainFrame();
+		});
 	}
 	
 	private void addAccount(Account newAccount) {

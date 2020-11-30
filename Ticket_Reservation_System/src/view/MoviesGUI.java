@@ -31,6 +31,7 @@ public class MoviesGUI extends JFrame{
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBackground(Color.BLACK);
 		setLayout(new BorderLayout());
+		setResizable(false);
 		
 		movies = m;
 		bookSeats = new ArrayList<BookSeatsButton>(movies.size()); 
@@ -92,6 +93,7 @@ public class MoviesGUI extends JFrame{
 		// add vertical scrollbar
 		add(panel, BorderLayout.CENTER);
 		JScrollPane scrollPanel = new JScrollPane(panel, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+		scrollPanel.getVerticalScrollBar().setUnitIncrement(10);
 		add(scrollPanel, BorderLayout.CENTER);
 	}
 	
