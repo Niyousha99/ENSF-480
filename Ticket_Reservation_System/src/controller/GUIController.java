@@ -109,7 +109,8 @@ public class GUIController {
 	}
 
 	private void initCheckoutFrame(Movie selectedMovie, String selectedShowtime, ArrayList<Seat> selectedSeats) {
-		checkoutFrame = new CheckoutGUI(selectedMovie, selectedShowtime, selectedSeats);
+		int userType = CheckUserType();
+		checkoutFrame = new CheckoutGUI(selectedMovie, selectedShowtime, selectedSeats, userType);
 		checkoutFrame.setVisible(true);
 		checkoutFrameEventHandler(selectedMovie, selectedShowtime, selectedSeats );
 	}
@@ -182,16 +183,26 @@ public class GUIController {
 	private void checkoutFrameEventHandler(Movie m, String showtime, ArrayList<Seat> theSeats) {
 		checkoutFrame.getConfirmButton().addActionListener((ActionEvent e) ->{
 			// Create reservation for user
-			int userType = 0;
-			if (user instanceof RegisteredUser)	userType = 1;
+			int userType = CheckUserType();
 			Reservation reservation = new Reservation(userType);
 			
 			
 			// TODO add ticket(s) to reservation
 			
-			for (int i =0; i< theSeats.size(); i++) {
-				Ticket newTick = new Ticket(m, theSeats.get(i), findAccount(user.getEmail()));
-				reservation.addTicket(newTick);
+			if(userType == 0) {
+				for (int i =0; i< theSeats.size(); i++) {
+					Ticket newTick = new Ticket(m, theSeats.get(i), 
+							new Account(checkoutFrame.getEmailInput(), "", 
+									checkoutFrame.getCreditCardNumInput(), checkoutFrame.getBankInput()));
+					reservation.addTicket(newTick);
+					user = new User(checkoutFrame.getEmailInput());
+				}
+			}
+			else {
+				for (int i =0; i< theSeats.size(); i++) {
+					Ticket newTick = new Ticket(m, theSeats.get(i), findAccount(user.getEmail()));
+					reservation.addTicket(newTick);
+				}
 			}
 			
 			
@@ -202,6 +213,12 @@ public class GUIController {
 			initConfirmationEmailFrame(reservation);
 		});	
 		
+	}
+	
+	private int CheckUserType() {
+		int userType = 0;
+		if (user instanceof RegisteredUser)	userType = 1;
+		return userType;
 	}
 	
 	public Account findAccount(String email) {

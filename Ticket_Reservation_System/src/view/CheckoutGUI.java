@@ -28,10 +28,16 @@ public class CheckoutGUI extends JFrame{
 	
 	private JTextField creditCardNumberText;
 	private JTextField bankName;
+	private JTextField emailText;
 	private Button confirm;
+	private int userType;
+	private String creditCardNumInput;
+	private String bankInput;
+	private String emailInput;
 
-	public CheckoutGUI(Movie selectedMovie, String selectedShowtime, ArrayList<Seat> selectedSeats) {
+	public CheckoutGUI(Movie selectedMovie, String selectedShowtime, ArrayList<Seat> selectedSeats, int uType) {
 		super("Checkout");
+		userType = uType;
 		setBounds(700, 250, 600, 600);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setLayout(new BorderLayout());
@@ -63,13 +69,29 @@ public class CheckoutGUI extends JFrame{
 		checkoutInfo.add(text);
 		
 		JLabel showtime = new JLabel("Showtime: "+selectedShowtime.toString());
-		showtime.setBounds(10, 300, 200, 150);
+		showtime.setBounds(10, 280, 200, 150);
 		checkoutInfo.add(showtime);
 		
 		JLabel seatsText = new JLabel("Seats Reserved: " + seatInfo(selectedSeats));
-		seatsText.setBounds(10, 320, 161, 150);
+		seatsText.setBounds(10, 300, 161, 150);
 		checkoutInfo.add(seatsText);
 		
+		if(userType == 0) {
+			JLabel userLabel3 = new JLabel("Email");
+			userLabel3.setBounds(10, 380, 150, 50);
+			checkoutInfo.add(userLabel3);
+			
+			emailText = new JTextField(20);
+			emailText.setBounds(150, 395, 150, 20);
+			checkoutInfo.add(emailText);
+			
+			emailText.addKeyListener(new KeyAdapter() {
+				public void keyReleased(KeyEvent e) {
+			        JTextField textField = (JTextField) e.getSource();
+			        emailInput = textField.getText();
+			    }    
+			});
+		}
 		JLabel userLabel1 = new JLabel("Credit Card Number");
 		userLabel1.setBounds(10, 400, 150, 50);
 		checkoutInfo.add(userLabel1);
@@ -89,14 +111,16 @@ public class CheckoutGUI extends JFrame{
 		creditCardNumberText.addKeyListener(new KeyAdapter() {
 			public void keyReleased(KeyEvent e) {
 		        JTextField textField = (JTextField) e.getSource();
-		        String text = textField.getText();
-		    }
-
-			public void keyTyped(KeyEvent e) {}
-
-		    public void keyPressed(KeyEvent e) {}     
+		        creditCardNumInput = textField.getText();
+		    }    
 		});
 		
+		bankName.addKeyListener(new KeyAdapter() {
+			public void keyReleased(KeyEvent e) {
+		        JTextField textField = (JTextField) e.getSource();
+		        bankInput = textField.getText();
+		    }    
+		});
 
 		confirm = new Button("confirm");
 		confirm.setBounds(10, 480, 80, 25);
@@ -124,4 +148,17 @@ public class CheckoutGUI extends JFrame{
 	}
 	
 	public JButton getConfirmButton() {return confirm;}
+	
+	public String getEmailInput() {
+		return emailInput;
+	}
+
+	public String getCreditCardNumInput() {
+		return creditCardNumInput;
+	}
+
+	public String getBankInput() {
+		return bankInput;
+	}
+	
 }
