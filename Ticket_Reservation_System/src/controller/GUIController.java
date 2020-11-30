@@ -195,8 +195,9 @@ public class GUIController {
 		
 	}
 	
+	// TODO add event handlers for EmailGUI
 	private void confirmationEmailEventHandler() {
-		// TODO Auto-generated method stub
+		
 		
 	}
 	

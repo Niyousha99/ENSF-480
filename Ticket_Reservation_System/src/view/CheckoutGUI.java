@@ -1,11 +1,13 @@
 package view;
 import model.*;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.util.ArrayList;
 
+import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -32,52 +34,57 @@ public class CheckoutGUI extends JFrame{
 		super("Checkout");
 		setBounds(700, 250, 600, 600);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setLayout(new GridLayout(0, 2));
+		setLayout(new BorderLayout());
 		setBackground(Color.LIGHT_GRAY);
+		setResizable(false);
 
 		JPanel panel = new JPanel();
 		panel.setBackground(Color.LIGHT_GRAY);
+		panel.setLayout(new GridLayout(0, 2));
 		add(panel);
-		panel.setLayout(null);
+		
+		// Add movie poster
+		MoviePosterGUI poster = new MoviePosterGUI(selectedMovie.getTitle());
+		panel.add(poster.getPoster());
+		
+		// checkout info beside movie poster
+		JPanel checkoutInfo = new JPanel();
+		checkoutInfo.setBackground(Color.LIGHT_GRAY);
+		checkoutInfo.setLayout(null);
 		
 		JTextArea text = new JTextArea();
-		text.setBounds(10, 10, 200, 200);
+		text.setBounds(10, 60, 250, 200);
 		text.setEditable(false);
 		text.setBackground(Color.GRAY);
 		text.setFont(new Font("Arial", Font.BOLD, 15));
 		text.setLineWrap(true);
 		text.setWrapStyleWord(true);
 		text.setText(selectedMovie.toString());
-		panel.add(text);
+		checkoutInfo.add(text);
 		
 		JLabel showtime = new JLabel("Showtime: "+selectedShowtime.toString());
-		showtime.setBounds(10, 150, 200, 150);
-		panel.add(showtime);
+		showtime.setBounds(10, 300, 200, 150);
+		checkoutInfo.add(showtime);
 		
-		JLabel seatsText = new JLabel("Seats Reserved: "+seatInfo(selectedSeats));
-		seatsText.setBounds(10, 170, 161, 150);
-		panel.add(seatsText);
-
-		
-//		JLabel movieInfo = new JLabel(selectedMovie.toString());
-//		movieInfo.setBounds(10, 10, 161, 150);
-//		panel.add(movieInfo);
+		JLabel seatsText = new JLabel("Seats Reserved: " + seatInfo(selectedSeats));
+		seatsText.setBounds(10, 320, 161, 150);
+		checkoutInfo.add(seatsText);
 		
 		JLabel userLabel1 = new JLabel("Credit Card Number");
-		userLabel1.setBounds(10, 250, 150, 50);
-		panel.add(userLabel1);
+		userLabel1.setBounds(10, 400, 150, 50);
+		checkoutInfo.add(userLabel1);
 
 		creditCardNumberText = new JTextField(20);
-		creditCardNumberText.setBounds(150, 265, 150, 20);
-		panel.add(creditCardNumberText);
+		creditCardNumberText.setBounds(150, 415, 150, 20);
+		checkoutInfo.add(creditCardNumberText);
 		
 		JLabel userLabel2 = new JLabel("Your Bank");
-		userLabel2.setBounds(10, 280, 150, 50);
-		panel.add(userLabel2);
+		userLabel2.setBounds(10, 430, 150, 50);
+		checkoutInfo.add(userLabel2);
 
 		bankName = new JTextField(20);
-		bankName.setBounds(150, 295, 150, 20);
-		panel.add(bankName);
+		bankName.setBounds(150, 445, 150, 20);
+		checkoutInfo.add(bankName);
 		
 		creditCardNumberText.addKeyListener(new KeyAdapter() {
 			public void keyReleased(KeyEvent e) {
@@ -92,9 +99,10 @@ public class CheckoutGUI extends JFrame{
 		
 
 		confirm = new Button("confirm");
-		confirm.setBounds(10, 350, 80, 25);
-		panel.add(confirm);
+		confirm.setBounds(10, 480, 80, 25);
+		checkoutInfo.add(confirm);
 		
+		panel.add(checkoutInfo);
 	}
 	
 	public String seatInfo(ArrayList<Seat> selectedSeats) {
