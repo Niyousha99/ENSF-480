@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 public class Reservation {
 	private ArrayList<Ticket> tickets;
+	private double reservationTotal;
 	private int userType; // 1 = registered, 0 = ordinary?
 
 	public Reservation(int uType) {
@@ -14,6 +15,7 @@ public class Reservation {
 	// For reserving tickets
 	public void addTicket(Ticket ticket) {
 		tickets.add(ticket);
+		reservationTotal += ticket.getPrice();
 	}
 	
 	// For canceling tickets
