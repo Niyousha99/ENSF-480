@@ -7,6 +7,7 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.util.ArrayList;
 
+import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -60,6 +61,9 @@ public class CheckoutGUI extends JFrame{
 		
 		JTextArea text = new JTextArea();
 		text.setBounds(10, 60, 250, 200);
+		text.setBorder(BorderFactory.createCompoundBorder(
+		        text.getBorder(), 
+		        BorderFactory.createEmptyBorder(5, 5, 5, 5)));
 		text.setEditable(false);
 		text.setBackground(Color.GRAY);
 		text.setFont(new Font("Arial", Font.BOLD, 15));
@@ -69,21 +73,37 @@ public class CheckoutGUI extends JFrame{
 		checkoutInfo.add(text);
 		
 		JLabel showtime = new JLabel("Showtime: "+selectedShowtime.toString());
-		showtime.setBounds(10, 280, 200, 150);
+		showtime.setBounds(10, 260, 200, 150);
 		checkoutInfo.add(showtime);
 		
 		JLabel seatsText = new JLabel("Seats Reserved: " + seatInfo(selectedSeats));
-		seatsText.setBounds(10, 300, 161, 150);
+		seatsText.setBounds(10, 280, 161, 150);
 		checkoutInfo.add(seatsText);
 		
 		if(userType == 0) {
 			JLabel userLabel3 = new JLabel("Email");
-			userLabel3.setBounds(10, 380, 150, 50);
+			userLabel3.setBounds(10, 370, 150, 50);
 			checkoutInfo.add(userLabel3);
 			
 			emailText = new JTextField(20);
-			emailText.setBounds(150, 395, 150, 20);
+			emailText.setBounds(150, 385, 120, 20);
 			checkoutInfo.add(emailText);
+		
+			JLabel userLabel1 = new JLabel("Credit Card Number");
+			userLabel1.setBounds(10, 400, 150, 50);
+			checkoutInfo.add(userLabel1);
+
+			creditCardNumberText = new JTextField(20);
+			creditCardNumberText.setBounds(150, 415, 120, 20);
+			checkoutInfo.add(creditCardNumberText);
+		
+			JLabel userLabel2 = new JLabel("Your Bank");
+			userLabel2.setBounds(10, 430, 150, 50);
+			checkoutInfo.add(userLabel2);
+
+			bankName = new JTextField(20);
+			bankName.setBounds(150, 445, 120, 20);
+			checkoutInfo.add(bankName);
 			
 			emailText.addKeyListener(new KeyAdapter() {
 				public void keyReleased(KeyEvent e) {
@@ -91,36 +111,32 @@ public class CheckoutGUI extends JFrame{
 			        emailInput = textField.getText();
 			    }    
 			});
+		
+			creditCardNumberText.addKeyListener(new KeyAdapter() {
+				public void keyReleased(KeyEvent e) {
+					JTextField textField = (JTextField) e.getSource();
+					creditCardNumInput = textField.getText();
+				}    
+			});
+		
+			bankName.addKeyListener(new KeyAdapter() {
+				public void keyReleased(KeyEvent e) {
+					JTextField textField = (JTextField) e.getSource();
+					bankInput = textField.getText();
+				}    
+			});
 		}
-		JLabel userLabel1 = new JLabel("Credit Card Number");
-		userLabel1.setBounds(10, 400, 150, 50);
-		checkoutInfo.add(userLabel1);
-
-		creditCardNumberText = new JTextField(20);
-		creditCardNumberText.setBounds(150, 415, 150, 20);
-		checkoutInfo.add(creditCardNumberText);
-		
-		JLabel userLabel2 = new JLabel("Your Bank");
-		userLabel2.setBounds(10, 430, 150, 50);
-		checkoutInfo.add(userLabel2);
-
-		bankName = new JTextField(20);
-		bankName.setBounds(150, 445, 150, 20);
-		checkoutInfo.add(bankName);
-		
-		creditCardNumberText.addKeyListener(new KeyAdapter() {
-			public void keyReleased(KeyEvent e) {
-		        JTextField textField = (JTextField) e.getSource();
-		        creditCardNumInput = textField.getText();
-		    }    
-		});
-		
-		bankName.addKeyListener(new KeyAdapter() {
-			public void keyReleased(KeyEvent e) {
-		        JTextField textField = (JTextField) e.getSource();
-		        bankInput = textField.getText();
-		    }    
-		});
+		else {
+			JTextArea textForRegisteredUser = new JTextArea();
+			textForRegisteredUser.setBounds(10, 400, 250, 50);
+			textForRegisteredUser.setFont(new Font("Arial", Font.PLAIN, 15));
+			textForRegisteredUser.setBackground(Color.LIGHT_GRAY);
+			textForRegisteredUser.setEditable(false);
+			textForRegisteredUser.setLineWrap(true);
+			textForRegisteredUser.setWrapStyleWord(true);
+			textForRegisteredUser.setText("You're already logged in, please confirm your reservation below.");
+			checkoutInfo.add(textForRegisteredUser);
+		}
 
 		confirm = new Button("confirm");
 		confirm.setBounds(10, 480, 80, 25);
