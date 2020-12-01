@@ -12,7 +12,10 @@ public class User {
 	
 	public String getEmail() {return email;}
 
-	public FinancialInstitution getBank() {return bank;}
+	public FinancialInstitution getBank() {
+		System.out.println("Bank!");
+		return bank;
+		}
 
 	public void setBank(FinancialInstitution bank) {this.bank = bank;}
 }

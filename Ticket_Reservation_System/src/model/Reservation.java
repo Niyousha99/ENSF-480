@@ -20,7 +20,10 @@ public class Reservation {
 	
 	// For canceling tickets
 	public void deleteTicket(Ticket ticket) {
-		
+		for(int i = 0; i < tickets.size(); i++) {
+			if (tickets.get(i).getSeat().toString().equals(ticket.getSeat().toString()))
+				tickets.remove(i);
+		}
 	}
 	
 	public Ticket getTicket(Seat seat) {
@@ -37,7 +40,6 @@ public class Reservation {
 		return null;
 	}
 
-	
 	public ArrayList<Ticket> getTickets(){return tickets;}
 	
 	public double getReservationTotal() {return reservationTotal;}

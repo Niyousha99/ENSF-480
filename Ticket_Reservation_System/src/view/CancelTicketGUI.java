@@ -12,17 +12,21 @@ import java.util.ArrayList;
 
 import javax.swing.BoxLayout;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 
 import model.*;
 
-public class CancelTicketGUI extends JFrame {
+public class CancelTicketGUI extends JFrame implements DocumentListener{
 	
 	private Button confirmCancel;
 	private Reservation theRes;
 	private JTextField selectSeatsText;
+	private String[] seats; // seats to cancel
 	private ArrayList<Ticket> tickets;
 	private double refund;
 	
@@ -65,6 +69,9 @@ public class CancelTicketGUI extends JFrame {
 		//selectSeatsPanel.setBounds(0, 200, 100, 100);
 		selectSeatsPanel.setBackground(Color.WHITE);
 		selectSeatsText = new JTextField(20);
+		
+		selectSeatsText.getDocument().addDocumentListener(this); //ADDED
+		
 		selectSeatsText.setPreferredSize(new Dimension(80, 25));
 		selectSeatsPanel.setLayout(new BoxLayout(selectSeatsPanel, BoxLayout.Y_AXIS));
 		//selectSeatsText.setBounds(10, 50, 10, 20);
@@ -72,9 +79,7 @@ public class CancelTicketGUI extends JFrame {
 		//selectSeatsText.setSize(120, 20);
 		selectSeatsText.setAlignmentX(Component.CENTER_ALIGNMENT);
 		selectSeatsPanel.add(selectSeatsText);
-		
-		
-		
+
 		JPanel buttonPanel = new JPanel();
 		buttonPanel.setBackground(Color.WHITE);
 		buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.Y_AXIS));
@@ -87,25 +92,15 @@ public class CancelTicketGUI extends JFrame {
 		contentPane.add(resPanel, BorderLayout.PAGE_START);
 		contentPane.add(selectSeatsPanel, BorderLayout.CENTER);
 		contentPane.add(buttonPanel, BorderLayout.PAGE_END);
-		
-		
-		
-		selectSeatsText.addKeyListener(new KeyAdapter() {
-			public void keyReleased(KeyEvent e) {
-		        JTextField textField = (JTextField) e.getSource();
-		         String[] temp = textField.getText().split(" ");
-		    }    
-		});
 	}
 
-	public Button getConfirmCancelButton() {
-		return confirmCancel;
-	}
-	
 	public String cancelationInfo() {
-		double total = tickets.size() * 12.50 *0.15;
+		System.out.println("ticket size: " + tickets.size());
+		//double total = tickets.size() * 12.50 *0.15;
+		double total = 2 * 12.50 *0.15;
 		total = Math.round(total * 100.0) / 100.0;
-		refund = tickets.size() * 12.50 - total;
+		//refund = tickets.size() * 12.50 - total;
+		refund = 2 * 12.50 - total;
 		refund = Math.round(refund * 100.0) / 100.0;
 		String s = "";
 		s+= theRes.toString();
@@ -116,15 +111,50 @@ public class CancelTicketGUI extends JFrame {
 		return s;
 	}
 	
-	public void checkTicket(String[] inputArr) {
-		for(int i =0; i< inputArr.length; i++) {
-			if(theRes.getTicket(inputArr[i]) != null) {
-				tickets.add(theRes.getTicket(inputArr[i]));
-			}
+	public boolean setTickets() {
+		for(int i = 0; i < seats.length; i++) {
+			if(theRes.getTicket(seats[i]) != null) {
+				tickets.add(theRes.getTicket(seats[i]));
+			}else return false;
 		}
+		return true;
 	}
 	
-	public double getRefund() {
-		return refund;
+	private boolean seatsEntered() {
+		if (selectSeatsText.getText().trim().length() != 0) 
+			return true;
+		
+		return false;
 	}
+	
+	private void checkInput() {
+		confirmCancel.setEnabled(seatsEntered());
+	}
+	
+	public void displayErrorMessage(String message) {
+		JOptionPane.showMessageDialog(this, message);
+	}
+	
+	@Override
+	public void insertUpdate(DocumentEvent e) {checkInput();}
+
+	@Override
+	public void removeUpdate(DocumentEvent e) {checkInput();}
+
+	@Override
+	public void changedUpdate(DocumentEvent e) {}
+	
+	public String getSeatsEntered() {return selectSeatsText.getText();}
+	
+	public ArrayList<Ticket> getTickets(){return tickets;}
+	
+	public double getRefund() {return refund;}
+	
+	public Button getConfirmCancelButton() {return confirmCancel;}
+	
+	public String[] getSeats() {return seats;}
+
+	public void setSeats(String[] seats) {this.seats = seats;}
+
+	
 }

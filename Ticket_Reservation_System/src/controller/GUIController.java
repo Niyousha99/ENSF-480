@@ -14,6 +14,7 @@ public class GUIController {
 	private ArrayList<Movie> movies;
 	private ArrayList<Account> accounts;
 	private User user;
+	private RegisteredUser registeredUser;
 	
 	private MainGUI mainFrame;
 	private LoginGUI loginWindow;
@@ -145,6 +146,7 @@ public class GUIController {
 				if (a.verifyAccount(email, password)) {
 					verified = true;
 					user = new RegisteredUser(a.getEmail(), a);
+					registeredUser = new RegisteredUser(a.getEmail(), a);
 					loginWindow.dispose();
 					initMoviesFrame();
 				}
@@ -169,7 +171,6 @@ public class GUIController {
 			accounts.add(newAccount);
 			addAccount(newAccount);
 			user = new RegisteredUser(email, newAccount);
-			
 			registerWindow.dispose();
 		});	
 	}
@@ -182,15 +183,18 @@ public class GUIController {
 			if(userType == 0) {
 				for (int i = 0; i < theSeats.size(); i++) {
 					Ticket newTick = new Ticket(m, theSeats.get(i), 
-							new Account(checkoutFrame.getEmailInput(), "", 
-									checkoutFrame.getCreditCardNumInput(), checkoutFrame.getBankInput()), showtime);
-					reservation.addTicket(newTick);
+							new Account(checkoutFrame.getEmailInput(), "", checkoutFrame.getCreditCardNumInput(), checkoutFrame.getBankInput()), showtime);
+							reservation.addTicket(newTick);
+							
+					theSeats.get(i).setReserved(true);
 					user = new User(checkoutFrame.getEmailInput());
 				}
 			}
+			
 			else {
 				for (int i = 0; i < theSeats.size(); i++) {
 					Ticket newTick = new Ticket(m, theSeats.get(i), findAccount(user.getEmail()), showtime);
+					theSeats.get(i).setReserved(true);
 					reservation.addTicket(newTick);
 				}
 			}
@@ -226,15 +230,33 @@ public class GUIController {
 			emailFrame.dispose();
 			initCancelTicketFrame(r);
 		});
+		
+		initMainFrame();
 	}
 	
 	private void cancelTicketEventHandler(Reservation r) {
 		cancelTicketFrame.getConfirmCancelButton().addActionListener((ActionEvent e) ->{
-			user.getBank().deposit(cancelTicketFrame.getRefund());
-			cancelTicketFrame.dispose();
-			// TODO Carry out cancellation logic here. (refund account, remove reservation)
-			JOptionPane.showMessageDialog(null, "Cancellation completed.");
-			initMainFrame();
+			
+			cancelTicketFrame.setSeats(cancelTicketFrame.getSeatsEntered().split(" "));
+			
+			if(!cancelTicketFrame.setTickets())
+				cancelTicketFrame.displayErrorMessage("Invalid seat number(s)!");
+			
+			else {		
+				RegisteredUser currentUser = (RegisteredUser)user;
+				System.out.println(currentUser.getAccount().getFI().getBankName());
+				currentUser.getAccount().getFI().deposit(cancelTicketFrame.getRefund());
+				user = currentUser;
+
+				for (Ticket t: cancelTicketFrame.getTickets()) {
+					t.getSeat().setReserved(false);
+					r.deleteTicket(t);
+					
+					cancelTicketFrame.dispose();
+					JOptionPane.showMessageDialog(null, "Cancellation completed.");
+					initMainFrame();
+				}
+			}
 		});
 		
 	}

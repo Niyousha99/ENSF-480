@@ -121,8 +121,10 @@ public class SeatsGUI extends JFrame implements Constants{
 	public void refresh() {
 		for (SeatLabel[] row: seatLabels) {
 			for (SeatLabel col: row) {
-				col.getSeat().setSelected(false);
-				col.setIcon(new ImageIcon("src/img/available_seat.jpg"));
+				if (!col.getSeat().isReserved()) {
+					col.getSeat().setSelected(false);
+					col.setIcon(new ImageIcon("src/img/available_seat.jpg"));
+				}
 			}
 			selectedSeats.clear();
 		}
