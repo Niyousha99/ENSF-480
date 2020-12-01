@@ -3,13 +3,15 @@ package model;
 public class Ticket {
 	private Movie movie;
 	private Seat seat;
+	private String showtime;
 	private Account account;
 	private double price;
 	
-	public Ticket(Movie m, Seat s, Account a) {
+	public Ticket(Movie m, Seat s, Account a, String st) {
 		setMovie(m);
 		setSeat(s);
 		setAccount(a);
+		setShowtime(st);
 		price = 12.50;
 	}
 
@@ -34,7 +36,15 @@ public class Ticket {
 	@Override
 	public String toString() {
 		String str = "";
-		str += seat.toString() + "\n\n";
+		str += seat.toString();
 		return str;
+	}
+
+	public String getShowtime() {
+		return showtime;
+	}
+
+	public void setShowtime(String showtime) {
+		this.showtime = showtime;
 	}
 }

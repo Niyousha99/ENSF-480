@@ -190,17 +190,17 @@ public class GUIController {
 			// TODO add ticket(s) to reservation
 			
 			if(userType == 0) {
-				for (int i =0; i< theSeats.size(); i++) {
+				for (int i = 0; i < theSeats.size(); i++) {
 					Ticket newTick = new Ticket(m, theSeats.get(i), 
 							new Account(checkoutFrame.getEmailInput(), "", 
-									checkoutFrame.getCreditCardNumInput(), checkoutFrame.getBankInput()));
+									checkoutFrame.getCreditCardNumInput(), checkoutFrame.getBankInput()), showtime);
 					reservation.addTicket(newTick);
 					user = new User(checkoutFrame.getEmailInput());
 				}
 			}
 			else {
 				for (int i =0; i< theSeats.size(); i++) {
-					Ticket newTick = new Ticket(m, theSeats.get(i), findAccount(user.getEmail()));
+					Ticket newTick = new Ticket(m, theSeats.get(i), findAccount(user.getEmail()), showtime);
 					reservation.addTicket(newTick);
 				}
 			}
