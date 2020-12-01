@@ -199,15 +199,19 @@ public class GUIController {
 				}
 			}
 			
-			// TODO input error checking:
-			//      - credit card number can only contain integers 
-			//      - payment valid (if balance enough in bank)
-			//      - etc.
-			checkoutFrame.displayMessage("Payment confirmed!");
-			checkoutFrame.dispose();
-			initConfirmationEmailFrame(reservation);
-		});	
-		
+			if (userType == 0) {
+				
+					try {
+						Integer x = Integer.parseInt(checkoutFrame.getCreditCardNumInput());
+						checkoutFrame.displayMessage("Payment confirmed!");
+						checkoutFrame.dispose();
+						initConfirmationEmailFrame(reservation);
+						
+					}catch(NumberFormatException error){
+						checkoutFrame.displayMessage("Invalid credit card number!");
+					}
+				}
+		});			
 	}
 	
 	private int CheckUserType() {

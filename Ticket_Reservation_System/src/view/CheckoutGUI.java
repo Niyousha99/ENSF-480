@@ -159,6 +159,7 @@ public class CheckoutGUI extends JFrame{
 	 */
 	public void displayMessage(String message) {
 		JOptionPane.showMessageDialog(this, message);
+		
 	}
 	
 	public JButton getConfirmButton() {return confirm;}

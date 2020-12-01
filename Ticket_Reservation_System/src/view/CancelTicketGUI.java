@@ -155,6 +155,5 @@ public class CancelTicketGUI extends JFrame implements DocumentListener{
 	public String[] getSeats() {return seats;}
 
 	public void setSeats(String[] seats) {this.seats = seats;}
-
 	
 }
