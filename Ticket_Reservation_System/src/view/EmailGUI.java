@@ -17,7 +17,7 @@ public class EmailGUI extends JFrame{
 	
 	public EmailGUI(ConfirmationEmail e) {
 		super("Email");
-		setBounds(800, 100, 500, 800);
+		setBounds(800, 100, 500, 1000);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setLayout(null);
 		setBackground(Color.WHITE);
@@ -65,12 +65,12 @@ public class EmailGUI extends JFrame{
 		
 		// Add receipt with cancel button
 		JPanel receiptPanel = new JPanel();
-		receiptPanel.setBounds(0, 600, 500, 200);
+		receiptPanel.setBounds(0, 600, 500, 350);
 		receiptPanel.setLayout(null);
 		receiptPanel.setBackground(Color.WHITE);
 		
 		JTextArea receipt = new JTextArea();
-		receipt.setBounds(0, 20, 500, 200);
+		receipt.setBounds(0, 20, 500, 100);
 		receipt.setBackground(Color.WHITE);
 		receipt.setForeground(Color.BLACK);
 		receipt.setEditable(false);
@@ -81,9 +81,13 @@ public class EmailGUI extends JFrame{
 		
 		cancelTicket = new Button("cancel ticket");
 		cancelTicket.setForeground(Color.BLACK);
-		cancelTicket.setBounds(190, 220, 120, 85);
+		cancelTicket.setBounds(0, 0, 100, 50);
 		receiptPanel.add(cancelTicket);
 		
 		add(receiptPanel);
+	}
+	
+	public Button getCancelTicketButton() {
+		return cancelTicket;
 	}
 }

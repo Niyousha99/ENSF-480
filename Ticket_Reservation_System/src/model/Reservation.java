@@ -30,6 +30,14 @@ public class Reservation {
 		return null;
 	}
 	
+	public Ticket getTicket(String seat) {
+		for (Ticket t: tickets)
+			if (t.getSeat().toString().equals(seat)) return t;
+		
+		return null;
+	}
+
+	
 	public ArrayList<Ticket> getTickets(){return tickets;}
 	
 	public double getReservationTotal() {return reservationTotal;}
@@ -43,11 +51,12 @@ public class Reservation {
 	// Returns all tickets as a string
 	@Override
 	public String toString() {
-		String str = "";
+		String str = "These are your Tickets\n";
 		for (Ticket t : tickets) {
 			str += t.toString();
 			str += "\n\n";
 		}
+		
 		return str;
 	}
 }

@@ -44,10 +44,10 @@ public class GUIController {
 	}
 	
 
-	public void initCancelTicketFrame() {
-		cancelTicketFrame = new CancelTicketGUI();
+	public void initCancelTicketFrame(Reservation r) {
+		cancelTicketFrame = new CancelTicketGUI(r);
 		cancelTicketFrame.setVisible(true);
-		cancelTicketEventHandler();
+		cancelTicketEventHandler(r);
 	}
 
 	private void initLoginFrame() {
@@ -74,7 +74,7 @@ public class GUIController {
 		ConfirmationEmail email = new ConfirmationEmail(user.getEmail(), r, tempReceipt);
 		emailFrame = new EmailGUI(email);
 		emailFrame.setVisible(true);
-		confirmationEmailEventHandler();
+		confirmationEmailEventHandler(r);
 	}
 	
 	
@@ -231,18 +231,24 @@ public class GUIController {
 	}
 	
 	// TODO add event handlers for EmailGUI
-	private void confirmationEmailEventHandler() {
-		
+	private void confirmationEmailEventHandler(Reservation r) {
+		emailFrame.getCancelTicketButton().addActionListener((ActionEvent e) ->{
+			emailFrame.dispose();
+			// TODO Carry out cancellation logic here. (refund account, remove reservation)
+			initCancelTicketFrame(r);
+		});
 		
 	}
 	
-	private void cancelTicketEventHandler() {
+	private void cancelTicketEventHandler(Reservation r) {
 		cancelTicketFrame.getConfirmCancelButton().addActionListener((ActionEvent e) ->{
+			user.getBank().deposit(cancelTicketFrame.getRefund());
 			cancelTicketFrame.dispose();
 			// TODO Carry out cancellation logic here. (refund account, remove reservation)
 			JOptionPane.showMessageDialog(null, "Cancellation completed.");
 			initMainFrame();
 		});
+		
 	}
 	
 	private void addAccount(Account newAccount) {
