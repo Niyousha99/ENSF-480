@@ -6,9 +6,7 @@ import java.awt.event.ActionEvent;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import javax.swing.JButton;
 import javax.swing.JComboBox;
-import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 public class GUIController {
@@ -69,15 +67,12 @@ public class GUIController {
 	}
 	
 	private void initConfirmationEmailFrame(Reservation r) {
-		// TODO create Email object and pass to EmailGUI
 		Receipt tempReceipt = new Receipt(r);
 		ConfirmationEmail email = new ConfirmationEmail(user.getEmail(), r, tempReceipt);
 		emailFrame = new EmailGUI(email);
 		emailFrame.setVisible(true);
 		confirmationEmailEventHandler(r);
 	}
-	
-	
 
 	private void moviesFrameEventHandler() {
 		int i = 0;
@@ -85,7 +80,6 @@ public class GUIController {
 			BookSeatsButton b = moviesFrame.getBookSeatButtons().get(i);
 			
 			cb.addActionListener((ActionEvent e) ->{
-				// if showtime is selected
 				if(cb.getSelectedIndex() != -1) {
 					b.setEnabled(true);
 					b.addActionListener((ActionEvent be) ->{
@@ -182,13 +176,9 @@ public class GUIController {
 	
 	private void checkoutFrameEventHandler(Movie m, String showtime, ArrayList<Seat> theSeats) {
 		checkoutFrame.getConfirmButton().addActionListener((ActionEvent e) ->{
-			// Create reservation for user
 			int userType = CheckUserType();
 			Reservation reservation = new Reservation(userType);
-			
-			
-			// TODO add ticket(s) to reservation
-			
+
 			if(userType == 0) {
 				for (int i = 0; i < theSeats.size(); i++) {
 					Ticket newTick = new Ticket(m, theSeats.get(i), 
@@ -199,17 +189,18 @@ public class GUIController {
 				}
 			}
 			else {
-				for (int i =0; i< theSeats.size(); i++) {
+				for (int i = 0; i < theSeats.size(); i++) {
 					Ticket newTick = new Ticket(m, theSeats.get(i), findAccount(user.getEmail()), showtime);
 					reservation.addTicket(newTick);
 				}
 			}
 			
-			
+			// TODO input error checking:
+			//      - credit card number can only contain integers 
+			//      - payment valid (if balance enough in bank)
+			//      - etc.
 			checkoutFrame.displayMessage("Payment confirmed!");
 			checkoutFrame.dispose();
-			System.out.println(reservation.getUserType());
-			System.out.println(reservation.toString());
 			initConfirmationEmailFrame(reservation);
 		});	
 		
@@ -229,15 +220,12 @@ public class GUIController {
 		}
 		return null;
 	}
-	
-	// TODO add event handlers for EmailGUI
+
 	private void confirmationEmailEventHandler(Reservation r) {
 		emailFrame.getCancelTicketButton().addActionListener((ActionEvent e) ->{
 			emailFrame.dispose();
-			// TODO Carry out cancellation logic here. (refund account, remove reservation)
 			initCancelTicketFrame(r);
 		});
-		
 	}
 	
 	private void cancelTicketEventHandler(Reservation r) {
@@ -257,6 +245,5 @@ public class GUIController {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		
 	}
 }

@@ -19,17 +19,17 @@ public class Receipt {
 	@Override
 	public String toString() {
 		// TODO fix text alignment
-		String str = "";
-		str += "Receipt:\n";
-		str += "General Ticket";
-		if (reservation.getTickets().size() > 1)
-			str += "s";
+		String space = "			";
+		String str = "General Ticket";
+		
+		if (reservation.getTickets().size() > 1) str += "s";
+		
 		str += "	" + reservation.getTickets().size() + " x $" + reservation.getTickets().get(0).getPrice();
-		str += " = $" + reservation.getTickets().get(0).getPrice() * reservation.getTickets().size();
-		str += "\nTax               	   $" + Double.valueOf(reservation.getTickets().get(0).getPrice() * reservation.getTickets().size()) / 20;
-		str += "\n----------------------------------";
-		str += "Total               $" + Double.valueOf(reservation.getTickets().get(0).getPrice() * reservation.getTickets().size()) / 20
-									   + reservation.getTickets().get(0).getPrice() * reservation.getTickets().size();
+		str += " = $" + reservation.getReservationTotal();
+		str += "\nTax" + space + "$" + Double.valueOf(reservation.getTickets().get(0).getPrice() * reservation.getTickets().size()) / 20;
+		str += "\n" + space + "----------------------------------\n";
+		str += "Total" + space + "$" + Double.valueOf(reservation.getTickets().get(0).getPrice() * reservation.getTickets().size()) / 20
+									   + reservation.getReservationTotal();
 		return str;
 	}
 }

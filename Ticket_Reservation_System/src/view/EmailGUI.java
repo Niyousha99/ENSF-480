@@ -14,7 +14,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextArea;
 
 public class EmailGUI extends JFrame{
-	private Email email;
+	private ConfirmationEmail email;
 	
 	private Button cancelTicket;
 	
