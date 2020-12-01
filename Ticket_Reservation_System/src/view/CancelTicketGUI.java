@@ -2,11 +2,15 @@ package view;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Component;
+import java.awt.Container;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 
+import javax.swing.BoxLayout;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
@@ -38,37 +42,52 @@ public class CancelTicketGUI extends JFrame {
 	}
 	
 	private void displayReservation() {
-		JPanel panel = new JPanel();
-		panel.setBounds(0, 0, 100, 100);
-		panel.setBackground(Color.WHITE);
-		panel.setLayout(null);
-		add(panel, BorderLayout.NORTH);
+		JPanel resPanel = new JPanel();
+		//resPanel.setBounds(0, 0, 100, 100);
+		resPanel.setBackground(Color.WHITE);
+		resPanel.setLayout(new BoxLayout(resPanel, BoxLayout.Y_AXIS));
 		
 		JTextArea text = new JTextArea();
 		text.setBackground(Color.DARK_GRAY);
 		text.setForeground(Color.WHITE);
-		text.setBounds(10, 10, 564, 520);
+		//resPanel.setSize(200, 200);
+		//text.setBounds(10, 10, 564, 520);
+		text.setSize(600, 300);
+		text.setPreferredSize(new Dimension(600, 300));
 		text.setEditable(false);
 		text.setFont(new Font("Arial", Font.PLAIN, 15));
 		text.setLineWrap(true);
+		text.setWrapStyleWord(true);
 		text.setText(cancelationInfo());
-		panel.add(text);
+		resPanel.add(text);
 		
 		JPanel selectSeatsPanel = new JPanel();
-		selectSeatsPanel.setBounds(0, 200, 100, 100);
-		selectSeatsPanel.setBackground(Color.BLACK);
+		//selectSeatsPanel.setBounds(0, 200, 100, 100);
+		selectSeatsPanel.setBackground(Color.WHITE);
 		selectSeatsText = new JTextField(20);
-		selectSeatsText.setBounds(10, 50, 10, 20);
+		selectSeatsText.setPreferredSize(new Dimension(80, 25));
+		selectSeatsPanel.setLayout(new BoxLayout(selectSeatsPanel, BoxLayout.Y_AXIS));
+		//selectSeatsText.setBounds(10, 50, 10, 20);
+		selectSeatsText.setMaximumSize(selectSeatsText.getPreferredSize());
+		//selectSeatsText.setSize(120, 20);
+		selectSeatsText.setAlignmentX(Component.CENTER_ALIGNMENT);
 		selectSeatsPanel.add(selectSeatsText);
-		add(selectSeatsPanel, BorderLayout.CENTER);
+		
 		
 		
 		JPanel buttonPanel = new JPanel();
-		buttonPanel.setBackground(Color.BLACK);
+		buttonPanel.setBackground(Color.WHITE);
+		buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.Y_AXIS));
 		confirmCancel = new Button("Confirm Cancellation");
 		confirmCancel.setSize(80, 25);
+		confirmCancel.setPreferredSize(new Dimension(80, 25));
 		buttonPanel.add(confirmCancel);
-		add(buttonPanel, BorderLayout.SOUTH);
+		
+		Container contentPane = getContentPane();
+		contentPane.add(resPanel, BorderLayout.PAGE_START);
+		contentPane.add(selectSeatsPanel, BorderLayout.CENTER);
+		contentPane.add(buttonPanel, BorderLayout.PAGE_END);
+		
 		
 		
 		selectSeatsText.addKeyListener(new KeyAdapter() {
