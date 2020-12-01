@@ -20,7 +20,7 @@ public class EmailGUI extends JFrame{
 	
 	public EmailGUI(ConfirmationEmail e) {
 		super("Email");
-		setBounds(750, 100, 500, 770);
+		setBounds(750, 100, 500, 775);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setLayout(null);
 		setBackground(Color.WHITE);
