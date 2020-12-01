@@ -40,10 +40,10 @@ public class Seat {
         if (o == this) return true; 
   
         /* Check if o is an instance of Time or not 
-          "null instanceof [type]" also returns false */
+          "null instance of [type]" also returns false */
         if (!(o instanceof Seat)) return false; 
          
-        // typecast o to Complex so that we can compare data members  
+        // type-cast o to Complex so that we can compare data members  
         Seat t = (Seat) o; 
           
         // Compare the data members and return accordingly  

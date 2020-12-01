@@ -29,7 +29,7 @@ public class Ticket {
 
 	public void setAccount(Account account) {this.account = account;}
 	
-	public void setPrice(int p) {price = p;}
+	public void setPrice(double p) {price = p;}
 	
 	public double getPrice() {return price;}
 	

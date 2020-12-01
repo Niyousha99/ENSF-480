@@ -34,7 +34,7 @@ public class Movie {
 		String[] times = new String[showtimes.size()];
 		int i = 0;
 		for (Showtime s: showtimes) {
-			times[i] = showtimes.get(i).toString();
+			times[i] = s.toString();
 			i++;
 		}
 		

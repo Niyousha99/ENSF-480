@@ -2,6 +2,11 @@ package model;
 
 public class Receipt {
 	private Reservation reservation;
+	private int numTickets;
+	private double preTaxTotal;
+	private double price;
+	private double postTaxTotal;
+	private double tax;
 	
 	
 	public Receipt(Reservation r) {
@@ -14,24 +19,64 @@ public class Receipt {
 
 	public void setReservation(Reservation reservation) {
 		this.reservation = reservation;
+		setNumTickets(reservation.getTickets().size());
+		setPrice(reservation.getTickets().get(0).getPrice());
+		setPreTaxTotal(reservation.getReservationTotal());
+		setTax(preTaxTotal / 20.00);
+		setPostTaxTotal(preTaxTotal + tax);
 	}	
 	
 	@Override
 	public String toString() {
-		// TODO fix text alignment
 		String space = "			";
 		String str = "General Ticket";
-		double finalTotal = reservation.getTickets().get(0).getPrice() * reservation.getTickets().size() /20 + reservation.getReservationTotal();
-		finalTotal = Math.round(finalTotal * 100.0) / 100.0;
-		if (reservation.getTickets().size() > 1) str += "s";
+		if (numTickets > 1) str += "s";
 		
-		str += "	" + reservation.getTickets().size() + " x $" + reservation.getTickets().get(0).getPrice();
-		str += " = $" + reservation.getReservationTotal();
-		str += "\nTax" + space + "$" + Double.valueOf(reservation.getTickets().get(0).getPrice() * reservation.getTickets().size())/20 ;
+		str += "	      " + numTickets + "   x   $" + String.format("%.2f", price);
+		str += "   =   $" + String.format("%.2f", preTaxTotal);
+		str += "\nTax" + space + " $" + String.format("%.2f", tax);
 		str += "\n" + space + "----------------------------------\n";
-//		str += "Total" + space + "$" + Double.valueOf(reservation.getTickets().get(0).getPrice() * reservation.getTickets().size()) /20 
-//									   + reservation.getReservationTotal();
-		str += "Total" + space + "$" + finalTotal;
+		str += "Total" + space + "$" + String.format("%.2f", postTaxTotal);
 		return str;
+	}
+
+	public double getPreTaxTotal() {
+		return preTaxTotal;
+	}
+
+	public void setPreTaxTotal(double total) {
+		this.preTaxTotal = total;
+	}
+	
+	public double getPostTaxTotal() {
+		return postTaxTotal;
+	}
+
+	public void setPostTaxTotal(double total) {
+		this.postTaxTotal = total;
+	}
+
+	public double getPrice() {
+		return price;
+	}
+
+	public void setPrice(double price) {
+		this.price = price;
+	}
+
+	public int getNumTickets() {
+		return numTickets;
+	}
+
+	public void setNumTickets(int numTickets) {
+		this.numTickets = numTickets;
+	}
+
+	public double getTax() {
+		return tax;
+	}
+
+	public void setTax(double tax) {
+		this.tax = tax;
 	}
 }
