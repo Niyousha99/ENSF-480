@@ -23,8 +23,6 @@ import java.awt.event.KeyEvent;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-// TODO fix to automatically fill in registered user info and show Movie Poster
-
 public class CheckoutGUI extends JFrame{
 	
 	private JTextField creditCardNumberText;

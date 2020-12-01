@@ -17,7 +17,7 @@ public class EmailGUI extends JFrame{
 	
 	public EmailGUI(ConfirmationEmail e) {
 		super("Email");
-		setBounds(800, 100, 500, 1000);
+		setBounds(750, 100, 500, 800);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setLayout(null);
 		setBackground(Color.WHITE);
@@ -45,22 +45,24 @@ public class EmailGUI extends JFrame{
 		// ticket information
 		JPanel ticketInfoPanel = new JPanel();
 		ticketInfoPanel.setBackground(Color.WHITE);
-		ticketInfoPanel.setLayout(new GridLayout(0,1));
+		ticketInfoPanel.setLayout(null);
+		JTextArea text = new JTextArea();
+		text.setBackground(Color.BLACK);
+		text.setForeground(Color.WHITE);
+		text.setBounds(10, 10, 300, 200);
+		text.setEditable(false);
+		text.setFont(new Font("Arial", Font.PLAIN, 15));
+		text.setLineWrap(true);
+		text.setWrapStyleWord(true);
+		String tickets = "";
 		
 		for(Ticket t: e.getReservation().getTickets()){
-			JTextArea text = new JTextArea();
-			text.setBackground(Color.BLACK);
-			text.setForeground(Color.WHITE);
-			//text.setBounds(10, 10, 300, 200);
-			text.setEditable(false);
-			text.setFont(new Font("Arial", Font.PLAIN, 15));
-			text.setLineWrap(true);
-			text.setWrapStyleWord(true);
-			text.setText(t.toString());
-			ticketInfoPanel.add(text);
-			ticketPanel.add(ticketInfoPanel);
+			tickets += t.toString() + "\n\n";
 		}
 		
+		text.setText(tickets);
+		ticketInfoPanel.add(text);
+		ticketPanel.add(ticketInfoPanel);
 		add(ticketPanel);
 		
 		// Add receipt with cancel button

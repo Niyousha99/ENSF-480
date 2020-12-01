@@ -28,13 +28,13 @@ public class DBManager {
 	public void connectToLoadDB(String url, String u, String p) throws SQLException {
 		dbConnection = DriverManager.getConnection(url, u, p);
 		loadDB();
-		dbConnection.close();
+		//dbConnection.close();
 	}
 	
 	public void ConnectToAddAccountToDB(Account acc,String url, String u, String p) throws SQLException {
 		Connection dbConnection = DriverManager.getConnection(url, u, p);
 		addAccountToDB(acc);
-		dbConnection.close();
+		//dbConnection.close();
 	}
 	
 	private void loadDB() throws SQLException {
@@ -92,9 +92,14 @@ public class DBManager {
 	}
 	
 	public void addAccountToDB(Account account) throws SQLException {
-		Statement dbStatement = dbConnection.createStatement();
-		dbStatement.executeUpdate("INSERT INTO theater.account_list" +
-				"VALUES ('" + account.getFI().getCardNumber() + "', '" + account.getFI().getBankName() + "')");// TODO add remainder of attributes
+		String query = "INSERT INTO ticket_reservation_backend.registeredUsers (password, email, creditCard, bankName) values (?,?,?,?)";
+		PreparedStatement pStat = dbConnection.prepareStatement(query);
+		pStat.setString(1, account.getPassword());
+		pStat.setString(2, account.getEmail());
+		pStat.setString(3, account.getFI().getCardNumber());
+		pStat.setString(4, account.getFI().getBankName());
+		pStat.execute();
+		pStat.close();
 	}
 
 	public ArrayList<Movie> getMovies() {

@@ -33,7 +33,7 @@ public class Ticket {
 	
 	@Override
 	public String toString() {
-		String str = movie.getTitle() + "\n";
+		String str = "";
 		str += seat.toString() + "\n\n";
 		return str;
 	}
