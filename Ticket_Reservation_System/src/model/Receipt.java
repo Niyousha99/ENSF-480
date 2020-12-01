@@ -21,15 +21,17 @@ public class Receipt {
 		// TODO fix text alignment
 		String space = "			";
 		String str = "General Ticket";
-		
+		double finalTotal = reservation.getTickets().get(0).getPrice() * reservation.getTickets().size() /20 + reservation.getReservationTotal();
+		finalTotal = Math.round(finalTotal * 100.0) / 100.0;
 		if (reservation.getTickets().size() > 1) str += "s";
 		
 		str += "	" + reservation.getTickets().size() + " x $" + reservation.getTickets().get(0).getPrice();
 		str += " = $" + reservation.getReservationTotal();
-		str += "\nTax" + space + "$" + Double.valueOf(reservation.getTickets().get(0).getPrice() * reservation.getTickets().size()) / 20;
+		str += "\nTax" + space + "$" + Double.valueOf(reservation.getTickets().get(0).getPrice() * reservation.getTickets().size())/20 ;
 		str += "\n" + space + "----------------------------------\n";
-		str += "Total" + space + "$" + Double.valueOf(reservation.getTickets().get(0).getPrice() * reservation.getTickets().size()) / 20
-									   + reservation.getReservationTotal();
+//		str += "Total" + space + "$" + Double.valueOf(reservation.getTickets().get(0).getPrice() * reservation.getTickets().size()) /20 
+//									   + reservation.getReservationTotal();
+		str += "Total" + space + "$" + finalTotal;
 		return str;
 	}
 }
