@@ -204,19 +204,19 @@ public class GUIController {
 				enoughBalance = registeredUser.getAccount().getFI().withdraw(12.5 * theSeats.size()*1.05);
 			}
 			
-			if(enoughBalance == false) checkoutFrame.displayMessage("Insufficient funds!");
-			else if (userType == 0) {
-				try {
-					Integer x = Integer.parseInt(checkoutFrame.getCreditCardNumInput());
-					checkoutFrame.displayMessage("Payment confirmed!");
-					if(!enoughBalance) checkoutFrame.displayMessage("Insufficient funds!");
-					else {
-					checkoutFrame.dispose();
-					initConfirmationEmailFrame();
+			if(!enoughBalance) checkoutFrame.displayMessage("Insufficient funds!");
+			else { 
+					if (userType == 0) {
+					try {
+						Integer x = Integer.parseInt(checkoutFrame.getCreditCardNumInput());
+					}catch(NumberFormatException error){
+						checkoutFrame.displayMessage("Invalid credit card number!");
 					}
-				}catch(NumberFormatException error){
-					checkoutFrame.displayMessage("Invalid credit card number!");
 				}
+					
+				checkoutFrame.displayMessage("Payment confirmed!");
+				checkoutFrame.dispose();
+				initConfirmationEmailFrame();
 			}
 		});	
 	}
