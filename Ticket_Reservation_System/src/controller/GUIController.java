@@ -14,7 +14,7 @@ public class GUIController {
 	private ArrayList<Movie> movies;
 	private ArrayList<Account> accounts;
 	private User user;
-	private RegisteredUser registeredUser;
+	private Reservation r;
 	
 	private MainGUI mainFrame;
 	private LoginGUI loginWindow;
@@ -43,10 +43,10 @@ public class GUIController {
 	}
 	
 
-	public void initCancelTicketFrame(Reservation r) {
+	public void initCancelTicketFrame() {
 		cancelTicketFrame = new CancelTicketGUI(r);
 		cancelTicketFrame.setVisible(true);
-		cancelTicketEventHandler(r);
+		cancelTicketEventHandler();
 	}
 
 	private void initLoginFrame() {
@@ -67,12 +67,12 @@ public class GUIController {
 		moviesFrameEventHandler();	
 	}
 	
-	private void initConfirmationEmailFrame(Reservation r) {
+	private void initConfirmationEmailFrame() {
 		Receipt tempReceipt = new Receipt(r);
 		ConfirmationEmail email = new ConfirmationEmail(user.getEmail(), r, tempReceipt);
 		emailFrame = new EmailGUI(email);
 		emailFrame.setVisible(true);
-		confirmationEmailEventHandler(r);
+		confirmationEmailEventHandler();
 	}
 
 	private void moviesFrameEventHandler() {
@@ -146,7 +146,6 @@ public class GUIController {
 				if (a.verifyAccount(email, password)) {
 					verified = true;
 					user = new RegisteredUser(a.getEmail(), a);
-					registeredUser = new RegisteredUser(a.getEmail(), a);
 					loginWindow.dispose();
 					initMoviesFrame();
 				}
@@ -178,40 +177,48 @@ public class GUIController {
 	private void checkoutFrameEventHandler(Movie m, String showtime, ArrayList<Seat> theSeats) {
 		checkoutFrame.getConfirmButton().addActionListener((ActionEvent e) ->{
 			int userType = CheckUserType();
-			Reservation reservation = new Reservation(userType);
+			r = new Reservation(userType);
+			boolean enoughBalance;
 
 			if(userType == 0) {
+				Account newAccount =new Account(checkoutFrame.getEmailInput(), "", checkoutFrame.getCreditCardNumInput(), checkoutFrame.getBankInput());
 				for (int i = 0; i < theSeats.size(); i++) {
 					Ticket newTick = new Ticket(m, theSeats.get(i), 
-							new Account(checkoutFrame.getEmailInput(), "", checkoutFrame.getCreditCardNumInput(), checkoutFrame.getBankInput()), showtime);
-							reservation.addTicket(newTick);
+							newAccount, showtime);
+							r.addTicket(newTick);
 							
+					
 					theSeats.get(i).setReserved(true);
-					user = new User(checkoutFrame.getEmailInput());
 				}
+				user = new User(checkoutFrame.getEmailInput(), checkoutFrame.getCreditCardNumInput(), checkoutFrame.getBankInput());
+				enoughBalance =  user.getBank().withdraw(12.5 * theSeats.size() * 1.05);
 			}
 			
 			else {
 				for (int i = 0; i < theSeats.size(); i++) {
 					Ticket newTick = new Ticket(m, theSeats.get(i), findAccount(user.getEmail()), showtime);
 					theSeats.get(i).setReserved(true);
-					reservation.addTicket(newTick);
+					r.addTicket(newTick);
 				}
+				RegisteredUser registeredUser = (RegisteredUser) user;
+				enoughBalance = registeredUser.getAccount().getFI().withdraw(12.5 * theSeats.size()*1.05);
 			}
 			
+			if(enoughBalance == false) checkoutFrame.displayMessage("Insufficient funds!");
 			if (userType == 0) {
-				
-					try {
-						Integer x = Integer.parseInt(checkoutFrame.getCreditCardNumInput());
-						checkoutFrame.displayMessage("Payment confirmed!");
-						checkoutFrame.dispose();
-						initConfirmationEmailFrame(reservation);
-						
-					}catch(NumberFormatException error){
-						checkoutFrame.displayMessage("Invalid credit card number!");
+				try {
+					Integer x = Integer.parseInt(checkoutFrame.getCreditCardNumInput());
+					checkoutFrame.displayMessage("Payment confirmed!");
+					if(!enoughBalance) checkoutFrame.displayMessage("Insufficient funds!");
+					else {
+					checkoutFrame.dispose();
+					initConfirmationEmailFrame();
 					}
+				}catch(NumberFormatException error){
+					checkoutFrame.displayMessage("Invalid credit card number!");
 				}
-		});			
+			}
+		});	
 	}
 	
 	private int CheckUserType() {
@@ -229,16 +236,19 @@ public class GUIController {
 		return null;
 	}
 
-	private void confirmationEmailEventHandler(Reservation r) {
+	private void confirmationEmailEventHandler() {
 		emailFrame.getCancelTicketButton().addActionListener((ActionEvent e) ->{
 			emailFrame.dispose();
-			initCancelTicketFrame(r);
+			initCancelTicketFrame();
 		});
 		
-		initMainFrame();
+		emailFrame.getContinueBrowsingButton().addActionListener((ActionEvent e) ->{
+			emailFrame.dispose();
+			initMoviesFrame();
+		});
 	}
 	
-	private void cancelTicketEventHandler(Reservation r) {
+	private void cancelTicketEventHandler() {
 		cancelTicketFrame.getConfirmCancelButton().addActionListener((ActionEvent e) ->{
 			
 			cancelTicketFrame.setSeats(cancelTicketFrame.getSeatsEntered().split(" "));
@@ -246,20 +256,27 @@ public class GUIController {
 			if(!cancelTicketFrame.setTickets())
 				cancelTicketFrame.displayErrorMessage("Invalid seat number(s)!");
 			
-			else {		
+			else {	
+				int userType = CheckUserType();
+				if(userType == 0) {
+					user.getBank().deposit(cancelTicketFrame.getRefund());
+				}
+				else {
 				RegisteredUser currentUser = (RegisteredUser)user;
-				System.out.println(currentUser.getAccount().getFI().getBankName());
 				currentUser.getAccount().getFI().deposit(cancelTicketFrame.getRefund());
 				user = currentUser;
+				}
 
 				for (Ticket t: cancelTicketFrame.getTickets()) {
 					t.getSeat().setReserved(false);
 					r.deleteTicket(t);
-					
-					cancelTicketFrame.dispose();
-					JOptionPane.showMessageDialog(null, "Cancellation completed.");
-					initMainFrame();
 				}
+				cancelTicketFrame.dispose();
+				cancelTicketFrame.displayRefundAmount();
+				if(r.getTickets().size() == 0)
+					initMainFrame();
+				else 
+					initConfirmationEmailFrame();
 			}
 		});
 		

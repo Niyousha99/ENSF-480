@@ -38,8 +38,8 @@ public class CancelTicketGUI extends JFrame implements DocumentListener{
 		setLocationRelativeTo(null);
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBackground(Color.WHITE);
-		setLayout(new BorderLayout());
+		setBackground(Color.DARK_GRAY);
+		getContentPane().setLayout(new BoxLayout(this.getContentPane(), BoxLayout.Y_AXIS));
 		
 		//test = new Reservation(0);
 		displayReservation();
@@ -47,17 +47,11 @@ public class CancelTicketGUI extends JFrame implements DocumentListener{
 	
 	private void displayReservation() {
 		JPanel resPanel = new JPanel();
-		//resPanel.setBounds(0, 0, 100, 100);
-		resPanel.setBackground(Color.WHITE);
-		resPanel.setLayout(new BoxLayout(resPanel, BoxLayout.Y_AXIS));
+		resPanel.setBackground(Color.LIGHT_GRAY);
 		
 		JTextArea text = new JTextArea();
-		text.setBackground(Color.DARK_GRAY);
-		text.setForeground(Color.WHITE);
-		//resPanel.setSize(200, 200);
-		//text.setBounds(10, 10, 564, 520);
-		text.setSize(600, 300);
-		text.setPreferredSize(new Dimension(600, 300));
+		text.setBackground(Color.LIGHT_GRAY);
+		text.setPreferredSize(new Dimension(500, 500));
 		text.setEditable(false);
 		text.setFont(new Font("Arial", Font.PLAIN, 15));
 		text.setLineWrap(true);
@@ -66,49 +60,46 @@ public class CancelTicketGUI extends JFrame implements DocumentListener{
 		resPanel.add(text);
 		
 		JPanel selectSeatsPanel = new JPanel();
-		//selectSeatsPanel.setBounds(0, 200, 100, 100);
-		selectSeatsPanel.setBackground(Color.WHITE);
-		selectSeatsText = new JTextField(20);
-		
-		selectSeatsText.getDocument().addDocumentListener(this); //ADDED
-		
-		selectSeatsText.setPreferredSize(new Dimension(80, 25));
-		selectSeatsPanel.setLayout(new BoxLayout(selectSeatsPanel, BoxLayout.Y_AXIS));
-		//selectSeatsText.setBounds(10, 50, 10, 20);
-		selectSeatsText.setMaximumSize(selectSeatsText.getPreferredSize());
-		//selectSeatsText.setSize(120, 20);
+		selectSeatsPanel.setBackground(Color.DARK_GRAY);
+		selectSeatsText = new JTextField(30);
+		selectSeatsText.getDocument().addDocumentListener(this);
+		selectSeatsText.setPreferredSize(new Dimension(100, 25));
 		selectSeatsText.setAlignmentX(Component.CENTER_ALIGNMENT);
 		selectSeatsPanel.add(selectSeatsText);
 
 		JPanel buttonPanel = new JPanel();
-		buttonPanel.setBackground(Color.WHITE);
-		buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.Y_AXIS));
+		buttonPanel.setBackground(Color.DARK_GRAY);
 		confirmCancel = new Button("Confirm Cancellation");
-		confirmCancel.setSize(80, 25);
-		confirmCancel.setPreferredSize(new Dimension(80, 25));
+		confirmCancel.setPreferredSize(new Dimension(200, 25));
+		buttonPanel.setSize(new Dimension(200, 30));
+		confirmCancel.setAlignmentX(Component.CENTER_ALIGNMENT);
 		buttonPanel.add(confirmCancel);
 		
 		Container contentPane = getContentPane();
-		contentPane.add(resPanel, BorderLayout.PAGE_START);
-		contentPane.add(selectSeatsPanel, BorderLayout.CENTER);
-		contentPane.add(buttonPanel, BorderLayout.PAGE_END);
+		contentPane.add(resPanel);
+		contentPane.add(selectSeatsPanel);
+		contentPane.add(buttonPanel);
 	}
 
 	public String cancelationInfo() {
-		System.out.println("ticket size: " + tickets.size());
-		//double total = tickets.size() * 12.50 *0.15;
-		double total = 2 * 12.50 *0.15;
-		total = Math.round(total * 100.0) / 100.0;
-		//refund = tickets.size() * 12.50 - total;
-		refund = 2 * 12.50 - total;
-		refund = Math.round(refund * 100.0) / 100.0;
 		String s = "";
 		s+= theRes.toString();
 		if(theRes.getUserType() == 0) {
-			s += "\n\n Becasue you are not a registered user you will have to pay a 15% cancellation fee\n";
-			s += "Cancellation fee: " + "$"+total;
+			s += "\n\n Because you are not a registered user you will have to pay a 15% cancellation fee\n";
 		}
+		s+= "\n\n\n Please input the seats you'd like to cancel, separated by a space";
 		return s;
+	}
+	
+	public void displayRefundAmount() {
+		double total = tickets.size() * 12.50;
+		refund = total;
+		if(theRes.getUserType() == 0) {
+			total = total* 0.15;
+			refund = tickets.size() * 12.50 - total;
+		}
+		refund = Math.round(refund * 100.0) / 100.0;
+		JOptionPane.showMessageDialog(null, "Cancellation completed. $" + String.format("%.2f", refund) + " has been deposited into your account.");
 	}
 	
 	public boolean setTickets() {

@@ -17,6 +17,7 @@ public class EmailGUI extends JFrame{
 	private ConfirmationEmail email;
 	
 	private Button cancelTicket;
+	private Button continueBrowsing;
 	
 	public EmailGUI(ConfirmationEmail e) {
 		super("Email");
@@ -94,14 +95,17 @@ public class EmailGUI extends JFrame{
 		JPanel cancelPanel = new JPanel();
 		cancelPanel.setBackground(Color.DARK_GRAY);
 		cancelPanel.setBounds(0, 700, 500, 100);
+		continueBrowsing = new Button("continue browsing");
+		continueBrowsing.setBounds(170, 70, 80, 25);
+		cancelPanel.add(continueBrowsing);
 		cancelTicket = new Button("cancel ticket");
-		cancelTicket.setBounds(210, 70, 80, 25);
+		cancelTicket.setBounds(260, 70, 80, 25);
 		cancelPanel.add(cancelTicket);
 		
 		add(cancelPanel);
 	}
 	
-	public JButton getCancelTicketButton() {
-		return cancelTicket;
-	}
+	public JButton getCancelTicketButton() {return cancelTicket;}
+	
+	public Button getContinueBrowsingButton() {return continueBrowsing;}
 }
