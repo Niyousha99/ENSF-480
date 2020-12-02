@@ -75,7 +75,7 @@ public class CheckoutGUI extends JFrame{
 		checkoutInfo.add(showtime);
 		
 		JLabel seatsText = new JLabel("Seats Reserved: " + seatInfo(selectedSeats));
-		seatsText.setBounds(10, 280, 161, 150);
+		seatsText.setBounds(10, 280, 200, 150);
 		checkoutInfo.add(seatsText);
 		
 		if(userType == 0) {

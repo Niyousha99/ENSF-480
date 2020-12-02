@@ -7,7 +7,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import javax.swing.JComboBox;
-import javax.swing.JOptionPane;
 
 public class GUIController {
 	private DBManager database;
@@ -179,15 +178,12 @@ public class GUIController {
 			int userType = CheckUserType();
 			r = new Reservation(userType);
 			boolean enoughBalance;
-
+			
 			if(userType == 0) {
-				Account newAccount =new Account(checkoutFrame.getEmailInput(), "", checkoutFrame.getCreditCardNumInput(), checkoutFrame.getBankInput());
+				Account newAccount = new Account(checkoutFrame.getEmailInput(), "", checkoutFrame.getCreditCardNumInput(), checkoutFrame.getBankInput());
 				for (int i = 0; i < theSeats.size(); i++) {
-					Ticket newTick = new Ticket(m, theSeats.get(i), 
-							newAccount, showtime);
-							r.addTicket(newTick);
-							
-					
+					Ticket newTick = new Ticket(m, theSeats.get(i), newAccount, showtime);
+					r.addTicket(newTick);
 					theSeats.get(i).setReserved(true);
 				}
 				user = new User(checkoutFrame.getEmailInput(), checkoutFrame.getCreditCardNumInput(), checkoutFrame.getBankInput());
@@ -204,9 +200,17 @@ public class GUIController {
 				enoughBalance = registeredUser.getAccount().getFI().withdraw(12.5 * theSeats.size()*1.05);
 			}
 			
-			if(!enoughBalance) checkoutFrame.displayMessage("Insufficient funds!");
-			else { 
-					if (userType == 0) {
+			if(!enoughBalance) {
+				for (int i = 0; i < theSeats.size(); i++) {
+					theSeats.get(i).setReserved(false);
+				}
+				checkoutFrame.displayMessage("Insufficient funds!");
+				checkoutFrame.dispose();
+				initMoviesFrame();
+			}
+			else {
+				
+				if (userType == 0) {
 					try {
 						Integer x = Integer.parseInt(checkoutFrame.getCreditCardNumInput());
 					}catch(NumberFormatException error){
@@ -214,9 +218,9 @@ public class GUIController {
 					}
 				}
 					
-				checkoutFrame.displayMessage("Payment confirmed!");
-				checkoutFrame.dispose();
-				initConfirmationEmailFrame();
+			checkoutFrame.displayMessage("Payment confirmed!");
+			checkoutFrame.dispose();
+			initConfirmationEmailFrame();
 			}
 		});	
 	}
@@ -262,9 +266,9 @@ public class GUIController {
 					user.getBank().deposit(cancelTicketFrame.getRefund());
 				}
 				else {
-				RegisteredUser currentUser = (RegisteredUser)user;
-				currentUser.getAccount().getFI().deposit(cancelTicketFrame.getRefund());
-				user = currentUser;
+					RegisteredUser currentUser = (RegisteredUser)user;
+					currentUser.getAccount().getFI().deposit(cancelTicketFrame.getRefund());
+					user = currentUser;
 				}
 
 				for (Ticket t: cancelTicketFrame.getTickets()) {

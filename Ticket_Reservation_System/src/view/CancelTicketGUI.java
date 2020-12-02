@@ -6,6 +6,7 @@ import java.awt.Component;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.GridLayout;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
@@ -40,18 +41,23 @@ public class CancelTicketGUI extends JFrame implements DocumentListener{
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBackground(Color.DARK_GRAY);
 		getContentPane().setLayout(new BoxLayout(this.getContentPane(), BoxLayout.Y_AXIS));
-		
-		//test = new Reservation(0);
 		displayReservation();
 	}
 	
 	private void displayReservation() {
+		// reservation panel
 		JPanel resPanel = new JPanel();
 		resPanel.setBackground(Color.LIGHT_GRAY);
+		resPanel.setLayout(new GridLayout(0, 2));
 		
+		// movie poster
+		MoviePosterGUI moviePoster = new MoviePosterGUI(theRes.getTickets().get(0).getMovie().getTitle());
+		resPanel.add(moviePoster.getPoster());
+		
+		// reservation information
 		JTextArea text = new JTextArea();
 		text.setBackground(Color.LIGHT_GRAY);
-		text.setPreferredSize(new Dimension(500, 500));
+		text.setPreferredSize(new Dimension(250, 500));
 		text.setEditable(false);
 		text.setFont(new Font("Arial", Font.PLAIN, 15));
 		text.setLineWrap(true);
@@ -82,12 +88,16 @@ public class CancelTicketGUI extends JFrame implements DocumentListener{
 	}
 
 	public String cancelationInfo() {
-		String s = "";
-		s+= theRes.toString();
+		String s = "\n" + theRes.getTickets().get(0).getMovie().toString();
+		s += "\n\nShowtime: " + theRes.getTickets().get(0).getShowtime();
+		s += "\n" + theRes.toString();
+		
 		if(theRes.getUserType() == 0) {
-			s += "\n\n Because you are not a registered user you will have to pay a 15% cancellation fee\n";
+			s += "\n\nBecause you are not a registered user you will have to pay a 15% cancellation fee\n";
 		}
-		s+= "\n\n\n Please input the seats you'd like to cancel, separated by a space";
+		
+		s+= "\n\n\nPlease input the seats you'd like to cancel, separated by a space";
+		
 		return s;
 	}
 	
