@@ -8,7 +8,7 @@ public class FinancialInstitution {
 	public FinancialInstitution(String name, String cardNum) {
 		setBankName(name);
 		setCardNumber(cardNum);
-		setBalance(50);
+		setBalance(100);
 	}
 	
 	public void deposit(double amount) {balance += amount;}

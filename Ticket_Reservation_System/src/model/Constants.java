@@ -7,7 +7,7 @@ public interface Constants {
 	// Credentials to connect to database
 	public static final String DBURL = "jdbc:mysql://localhost/ticket_reservation_backend?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
 	public static final String DBUSERNAME = "root";
-	public static final String DBPASSWORD = "root";
+	public static final String DBPASSWORD = "Nr!!!197219748";
 
 }
 //L40532734b? 

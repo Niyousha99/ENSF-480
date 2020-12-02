@@ -205,7 +205,7 @@ public class GUIController {
 			}
 			
 			if(enoughBalance == false) checkoutFrame.displayMessage("Insufficient funds!");
-			if (userType == 0) {
+			else if (userType == 0) {
 				try {
 					Integer x = Integer.parseInt(checkoutFrame.getCreditCardNumInput());
 					checkoutFrame.displayMessage("Payment confirmed!");
